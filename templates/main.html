@@ -1,12 +1,285 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+
+    <title>운동 어때?</title>
+
+    <style>
+        * {
+    font-family: 'Gowun Dodum', sans-serif;
+    padding: 0px;
+}
+        .wrap{
+            
+            background-color: yellow;
+            width: 100%;
+            height: 1200px;
+            max-height: 1100px;
+            
+
+            /*                    header                  */
+
+            
+        }
+        .header_title {
+            width: 100%;
+            height: 200px;
+
+            /* background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://movie-phinf.pstatic.net/20210715_95/1626338192428gTnJl_JPEG/movie_image.jpg'); */
+            background-color: green;
+            background-position: center;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+
+            /*flex-direction: column;*/
+            /*align-items: center;*/
+            /*justify-content: center*/
+        }
+
+         .header_title > h1{
+            width: 1000px;
+             margin-left: 80px;
+             margin-top : 50px;
+         }
+         .login{
+             height: 20%;
+             width: 700px;
+         }
+
+        .login  ul  li{
+            list-style: none;
+            background: url(../static/img/bar-1x12-b2b2b2.png) no-repeat left 11px;
+            padding: 7px 10px 0 ;
+            float: left;
+            min-height: 15px;
+        }
+
+        .login ul li:first-child{
+            background: none;
+        }
+
+        a{
+            color:white;
+            text-decoration: none;
+        }
+        a:hover{
+            color:aqua
+        }
+
+
+/*                    main                   */
+
+        section{
+            
+            margin-top: 50px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+
+
+/*                    팝업창                  */
+
+/* .modal-detail{
+    width : 100%;
+  height : 100%;
+  position : fixed;
+  background : rgba(0,0,0,0.5);
+  z-index :5;
+  padding: 30px;
+} */
+
+     .white-bg {
+        background-color: pink;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        height: 600px;
+    }
+
+    .photo_detail{
+        float: left;
+        width: 40%;
+        height: 40%;
+        background-color: blue;
+        margin-left: 30px;
+    }
+
+    .comment_detail{
+        width: 45%;
+        height: 90%;
+        margin-left: 360px;
+        margin-top: 20px;
+        background-color: brown;
+        
+    }
+
+    .location_detail{
+        width: 40%;
+        height: 20%;
+        background-color: blueviolet;
+        position: relative;
+        left: 30px;
+        bottom: 250px;
+
+    }
     
+
+
+
+    </style>
+</head>
+
+<body>
+        <div class="wrap">
+            <header>
+                <div class="header_title">
+                    <h1>우리들의 운동장</h1>
+
+                    <div class="login">
+                        <ul>
+                            <li>    
+                                <a href="#">로그인</a>
+                            </li>
+                            <li>    
+                                <a href="#">회원가입</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </header>
+            <section>
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    <div class="col">
+                      <div class="card">
+                        <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">운동명</h5>
+                          <p class="card-text">카테고리</p>
+                          <p class="card-text">지역명</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">운동명</h5>
+                          <p class="card-text">카테고리</p>
+                          <p class="card-text">지역명</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">운동명</h5>
+                          <p class="card-text">카테고리</p>
+                          <p class="card-text">지역명</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">운동명</h5>
+                          <p class="card-text">카테고리</p>
+                          <p class="card-text">지역명</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">운동명</h5>
+                          <p class="card-text">카테고리</p>
+                          <p class="card-text">지역명</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                          <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <h5 class="card-title">운동명</h5>
+                            <p class="card-text">카테고리</p>
+                            <p class="card-text">지역명</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="card">
+                          <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <h5 class="card-title">운동명</h5>
+                            <p class="card-text">카테고리</p>
+                            <p class="card-text">지역명</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="card">
+                          <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <h5 class="card-title">운동명</h5>
+                            <p class="card-text">카테고리</p>
+                            <p class="card-text">지역명</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="card">
+                          <img src="../static/img/헬스장.jpg" class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <h5 class="card-title">운동명</h5>
+                            <p class="card-text">카테고리</p>
+                            <p class="card-text">지역명</p>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+            </section>
+        <footer>
+
+        </footer>
+
+        </div>
+
+        <!-- 팝업창 레이어-->
+
+        <div class="modal-detail">
+            <div class="white-bg">
+               <div class="photo_detail">
+
+               </div>
+               <div class="comment_detail"></div>
+               <div class="location_detail"></div>
+               <div class="link_detail"></div>
+            </div>
+        </div> 
+
 </body>
+
 </html>
