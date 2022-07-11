@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: beige;
+            height: 100px;
+            padding: 0 3%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        body {
+            background-image: url("https://magazine.cheil.com/wp-content/uploads/2021/08/%EC%BB%A8%ED%85%90%EC%B8%A0B_960_300_02.jpg");
+            background-repeat: no-repeat;
+            background-position: center 10px;
+            background-size: cover;
+            /*top: 100px;*/
+        }
+
+        section {
+            background-color: white;
+            text-align: center;
+            width: 500px;
+            padding: 3rem;
+            margin: 0 auto;
+            margin-top: 5%;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+
+        h2 {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .inp {
+            width: 80%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: auto;
+            padding: 0.5rem 1rem;
+            border: 0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+
+    </style>
+</head>
+<body>
+<header>
+    <div id="title">
+        <h1>
+            우리들의 운동장(우동장)
+        </h1>
+    </div>
+    <div id="link">
+        <span><a>로그인</a></span>
+        <span><a>회원가입</a></span>
+    </div>
+</header>
+<main>
+    <section>
+        <h2>로그인</h2>
+        <div>
+            <label for="id">ID : </label>
+            <input class="inp" id="id" type="text" name="id">
+            <br>
+            <label for="pw">PW : </label>
+            <input class="inp" id="pw" type="password" name="pw">
+            <br>
+            <button class="btn">로그인</button>
+            <button class="btn">회원가입</button>
+        </div>
+
+
+    </section>
+</main>
+</body>
+</html>
