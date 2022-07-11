@@ -4,6 +4,7 @@ import hashlib
 
 # jwt 토큰 생성
 import jwt
+
 SECRET_KEY = "sparta"
 
 app = Flask(__name__)
@@ -39,7 +40,27 @@ def write():
 # 로그인 페이지 이동
 @app.route('/login')
 def loginPage():
-    return render_template('login.html')
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('login.html', userid=user_info["idenfier"])
+    else:
+        return render_template('login.html')
+
+
+# user 사용자 로그인 여부 확인 api
+@app.route('/islogin', methods=['POST'])
+def checkcookie():
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        return jsonify({
+            'result': {'success': 'true'}
+        })
+    else:
+        return jsonify({
+            'result': {'success': 'false'}
+        })
 
 
 # 로그인 시도
