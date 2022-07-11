@@ -14,7 +14,8 @@ from datetime import datetime, timedelta
 
 # 파이몽고 라이브러리
 from pymongo import MongoClient
-client = MongoClient('localhost', 27017)
+# client = MongoClient('localhost', 27017)
+client = MongoClient('15.165.158.21', 27017, username="test", password="test")
 db = client.playGround
 
 app = Flask(__name__)
