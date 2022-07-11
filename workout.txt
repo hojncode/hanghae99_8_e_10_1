@@ -1,4 +1,144 @@
-운동어때
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-1.
-2.
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <title>작성 페이지</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+          rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .choice {
+            width: 300px;
+            display: flex;
+        }
+
+        .choiceA {
+            margin-right: 10px;
+        }
+
+        .mypic {
+            width: 100%;
+            height: 500px;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://img.freepik.com/free-vector/couple-practicing-trail-run-training_74855-5474.jpg?w=1060&t=st=1657521405~exp=1657522005~hmac=6901b827fa2074368b472b5c3babc492b279e00cd52976028a9d4bb06d71b7dc');
+            background-position: center 30%;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
+
+        .link{
+            margin: 10px auto 10px;
+        }
+
+        .comment {
+            width: 500px;
+        }
+        .btn-post{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+    </script>
+</head>
+
+
+<body class="mypic">
+<form>
+<div class="choice">
+<div class="form-group choiceA" >
+    <label for="exampleFormControlSelect1">지역 선택</label>
+    <select class="local-selector" name="local">
+                <option value="">지역 선택</option>
+                <option value="서울">서울</option>
+                <option value="경기도">경기도</option>
+                <option value="광주">광주</option>
+                <option value="대전">대전</option>
+                <option value="대구">대구</option>
+                <option value="부산">부산</option>
+                <option value="인천">인천</option>
+                <option value="강원도">강원도</option>
+                <option value="경상북도">경상북도</option>
+                <option value="경상남도">경상남도</option>
+                <option value="전라북도">전라북도</option>
+                <option value="전라남도">전라남도</option>
+                <option value="충청북도">충청북도</option>
+                <option value="강원도">강원도</option>
+                <option value="강원도">제주</option>
+            </select>
+</div>
+
+<div class="form-group">
+    <label for="exampleFormControlSelect1">운동 종류 선택하기</label>
+    <select class="local-selector" name="local">
+                <option value="">운동 선택</option>
+                <option value="서울">헬스</option>
+                <option value="경기도">크로스핏</option>
+                <option value="광주">등산</option>
+                <option value="대전">수영</option>
+                <option value="대전">싸이클</option>
+                <option value="대전">클라이밍</option>
+                <option value="대전">기타</option>
+
+            </select>
+</div>
+</div>
+
+
+<div class="link">
+    <label for="exampleInputEmail1">위치 정보 링크 입력하는곳</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+           placeholder="지도 url 입력해주세요">
+    <small id="emailHelp" class="form-text text-muted"></small>
+</div>
+
+
+
+
+
+    <form>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">사진을 첨부해주세요(선택사항)</label>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+  </div>
+</form>
+
+
+
+<div class="comment">
+    <label for="exampleFormControlTextarea1">코멘트 작성</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+
+<div class="btn-post">
+<button type="button" >등록하기</button>
+</div>
+
+</body>
+
+</html>
