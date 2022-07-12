@@ -1,49 +1,65 @@
 /* 화면이 로딩이되면 실행하는 코드*/
 
-$(document).ready(function(){
-    set_temp()
-    show_comment()
+$(document).ready(function () {
+    $(".cards").empty()
+    show_cardList()
 });
 
 
 /* card GET 코드 */
-function show_comment() {
-    $('#comment-list').empty()
+function show_cardList() {
+
     $.ajax({
         type: "GET",
-        url: "/homework",
+        url: "/getpost",
         data: {},
         success: function (response) {
-            // let rows = response['comments']
-            // for (let i = 0; i < rows.length; i++) {
-            //     let name = rows[i]['name']
-            //     let comment = rows[i]['comment']
+            console.log(response['msg'])
 
-            //     let temp_html = `<div class="card">
-            //                         <div class="card-body">
-            //                             <blockquote class="blockquote mb-0">
-            //                                 <p>${comment}</p>
-            //                                 <footer class="blockquote-footer">${name}</footer>
-            //                             </blockquote>
-            //                         </div>
-            //                     </div>`
-            //     $('#comment-list').append(temp_html)
-        //     }
-         }
+            let rows = response['all_post']
+            for (let i = 0; i < rows.length; i++) {
+                let address = rows[i]['address']
+                console.log(address)
+                let comment = rows[i]['comment']
+                let file = "../static/postimg/" + rows[i]['file']
+                console.log(file)
+                let location = rows[i]['location']
+                let workout = rows[i]['workout']
+
+                let temp_html = `<div class="card">
+                                    <img src="${file}" class="card-img-top"  alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="card_img">${workout}</h5>
+                                        <p class="card-text">${location}</p>
+                                    </div>
+                                </div>`
+                $('.cards').append(temp_html)
+
+
+            //     let modal_html = ` <div class="photo_detail">
+            // </div>
+            // <div class="comment_detail">${comment}</div>
+            // <div class="location_detail"></div>
+            // <div class="link_detail"></div>`
+            //
+            //     $(`#modal_bg`).append(modal_html)
+
+            }
+
+
+        }
     });
 }
 
 
-
-
 /* 모달창  */
 
-$('#card_img').on('click',function(){
-    $('#modal').css('display','block');
+$('#card_img').on('click', function () {
+    $('#modal').css('display', 'block');
 });
 
-$('#close').on('click', function(){
-    $('#modal').css('display','none');
+$('#close').on('click', function () {
+    $('#modal').css('display', 'none');
 })
 
 

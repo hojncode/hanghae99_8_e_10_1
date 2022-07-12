@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="kor">
 
 <head>
     <meta charset="UTF-8">
@@ -13,41 +13,55 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <style>
-        body {
-            min-height: 100vh;
-
-            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+    {#    구글폰트#}
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
 
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/12/0415c4378a98400fbd96d00de64e8112');
-            background-position: center;
-            background-size: cover;
+    <!-- 배너 css -->
+    <link rel="stylesheet" href="../static/css/banner.css">
+    <!-- 로그인체크 및 로그아웃 js -->
+    <script src="../static/js/logincheck.js" defer></script>
 
-        }
+    <!-- css -->
+    <link href="../static/css/signup.css" rel="stylesheet">
+    {#회원가입 시도#}
+    <script src="../static/js/signup.js" defer></script>
 
-        .input-form {
-            max-width: 680px;
-
-            margin-top: 80px;
-            padding: 32px;
-
-            background: #fff;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            border-radius: 10px;
-            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-        }
-    </style>
 </head>
 
 <body>
+<header>
+    <div class="header_title">
+        <h1>
+            <a href="/">우리들의 운동장</a>
+            <img id="bannerimg" src="../static/img/exercise.png">
+        </h1>
+        {#        <div class="header_temp">#}
+        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
+        {#        </div>#}
+
+        <div class="login">
+            <ul class="loginfalse">
+                <li>
+                    <a href="/login">로그인</a>
+                </li>
+                <li>
+                    <a href="/signup">회원가입</a>
+                </li>
+            </ul>
+            <ul class="loginture">
+                <li>
+                    <a href="/login">{{ userid }}</a>
+                </li>
+                <li>
+                    <a onclick="logout()">로그아웃</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</header>
 <div class="container">
     <div class="input-form-backgroud row">
         <div class="input-form col-md-12 mx-auto">
@@ -119,55 +133,8 @@
         </div>
     </div>
 </div>
-<script>
-    window.addEventListener('load', () => {
-        const forms = document.getElementsByClassName('validation-form');
 
-        Array.prototype.filter.call(forms, (form) => {
-            form.addEventListener('submit', function (event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    event.preventDefault();
-                    save_order()
-                    {#alert('회원가입 완료!')#}
-                }
-
-                form.classList.add('was-validated');
-            }, false);
-        });
-    }, false);
-
-    function save_order() {
-
-        let name = $('#name')
-        let nickname = $('#nickname')
-        let idenfier = $('#idenfier')
-        let password = $('#password')
-        let email = $('#email')
-        let number = $('#number')
-        let address = $('#address')
-
-        $.ajax({
-            type: 'POST',
-            url: '/users',
-            data: {
-                name_give: name.val(),
-                nick_give: nickname.val(),
-                idenfier_give: idenfier.val(),
-                password_give: password.val(),
-                email_give: email.val(),
-                number_give: number.val(),
-                address_give: address.val()
-            },
-            success: function (response) {
-                alert(response['msg'])
-                window.location.replace("/login")
-            }
-        });
-    }
-</script>
 </body>
+
 
 </html>

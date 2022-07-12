@@ -1,5 +1,13 @@
+$(document).ready(function () {
+    $(".loginfalse").hide()
+    $(".loginture").hide()
+    check_login()
+    // set_temp()
+})
+
 // 로그인 여부 확인 함수
 function check_login() {
+    console.log("login check")
     $.ajax({
         type: 'POST',
         url: '/islogin',
