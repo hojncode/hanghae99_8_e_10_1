@@ -87,46 +87,6 @@ def save_post():
 
     return jsonify({'msg': '저장완료'})
 
-@app.route('/week1', methods=['GET'])
-def show_diary():
-    week1 = list(db.week1.find({}, {'_id': False}))
-    return jsonify({'all_week1': week1})
-
-
-@app.route('/week1', methods=['POST'])
-def save_diary():
-
-    location_receive = request.form["location_give"]
-    workout_receive = request.form["workout_give"]
-    address_receive = request.form["address_give"]
-    comment_receive = request.form["comment_give"]
-
-
-    file = request.files["file_give"]
-
-    extension = file.filename.split('.')[-1]
-
-    today = datetime.now()
-    mytime = today.strftime('%Y년 %m월 %d일 %H시 %M분 %S초')
-
-    filename = f'file-{mytime}'
-
-    save_to = f'static/{filename}.{extension}'
-    file.save(save_to)
-
-
-    doc = {
-        'location': location_receive,
-        'workout': workout_receive,
-        'address': address_receive,
-        'comment': comment_receive,
-        'file': f'{filename}.{extension}'
-    }
-    db.week1.insert_one(doc)
-
-
-    return jsonify({'msg': 'POST 요청 완료!'})
-
 
 # 로그인 페이지 이동
 @app.route('/login')
