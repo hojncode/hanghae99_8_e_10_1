@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, Blueprint
 # 회원가입시 pw 암호화 해싱
 import hashlib
 
@@ -7,6 +7,11 @@ import jwt
 
 SECRET_KEY = "sparta"
 
+app = Flask(__name__)
+
+# from app_user import user
+# app.register_blueprint(user)
+
 # 시간 라이브러리
 import datetime
 # 토큰을 만들때 유효기간을 설정하기 위해서 서버시간을 가져와서 그로부터 얼마만큼 유효하게 설정하기 위해 필요
@@ -14,11 +19,10 @@ from datetime import datetime, timedelta
 
 # 파이몽고 라이브러리
 from pymongo import MongoClient
+
 # client = MongoClient('localhost', 27017)
 client = MongoClient('15.165.158.21', 27017, username="test", password="test")
 db = client.playGround
-
-app = Flask(__name__)
 
 
 # 메인 페이지 이동
@@ -30,7 +34,7 @@ def home():
 # 글작성 페이지 이동
 @app.route('/write')
 def write():
-    return render_template('workout.html')
+    return render_template('writing.html')
 
 @app.route('/week1', methods=['GET'])
 def show_diary():
@@ -76,24 +80,44 @@ def save_diary():
 # 로그인 페이지 이동
 @app.route('/login')
 def loginPage():
-    return render_template('login.html')
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('login.html', userid=user_info["idenfier"])
+    else:
+        return render_template('login.html')
+
+
+# user 사용자 로그인 여부 확인 api
+@app.route('/islogin', methods=['POST'])
+def checkcookie():
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        return jsonify({
+            'result': {'success': 'true'}
+        })
+    else:
+        return jsonify({
+            'result': {'success': 'false'}
+        })
 
 
 # 로그인 시도
 @app.route('/login', methods=['POST'])
 def login():
-    id_receive = request.form['id_give']
-    pw_receive = request.form['pw_give']
+    idenfier_receive = request.form['id_give']
+    password_receive = request.form['pw_give']
 
     # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
-    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     # id와 해싱된 pw를 디비에서 찾는다
-    result = db.users.find_one({'id': id_receive, 'pw': pw_hash}, {'_id': False})
+    result = db.users.find_one({'idenfier': idenfier_receive, 'password': password_hash}, {'_id': False})
 
     # 디비에 일치하는 정보가 있다면 로그인토큰을 만들것이고 없어서 None이라면 fail 결과가 나옴
     if result is not None:
         payload = {
-            'id': id_receive,
+            'idenfier': idenfier_receive,
             # 토큰의 유효기간을 설정(지금은 24시간 유효기간으로 설정해놈)(시간지나면 로그인이 풀림)
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
@@ -105,24 +129,40 @@ def login():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-# 회원가입 예시
-@app.route('/create', methods=['POST'])
-def create():
-    id_receive = request.form['id_give']
-    pw_receive = request.form['pw_give']
-
-    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-
-    doc = {'id': id_receive, 'pw': pw_hash}
-    db.users.insert_one(doc)
-
-    return jsonify({'result': 'success', 'msg': '회원가입 시도'})
-
 
 # 회원가입 페이지 이동
 @app.route('/signup')
 def singup():
     return render_template('signup.html')
+
+
+# 회원가입
+@app.route('/users', methods=['POST'])
+def createUser():
+    name_receive = request.form['name_give']
+    nick_receive = request.form['nick_give']
+    idenfier_receive = request.form['idenfier_give']
+    password_receive = request.form['password_give']
+    email_receive = request.form['email_give']
+    number_receive = request.form['number_give']
+    address_receive = request.form['address_give']
+
+    # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
+    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+
+    doc = {
+        'name': name_receive,
+        'nick': nick_receive,
+        'idenfier': idenfier_receive,
+        'password': password_hash,
+        'email': email_receive,
+        'number': number_receive,
+        'address': address_receive,
+
+    }
+    db.users.insert_one(doc)
+
+    return jsonify({'result': 'success', 'msg': '회원가입 완료'})
 
 
 if __name__ == '__main__':
