@@ -28,13 +28,64 @@ db = client.playGround
 # 메인 페이지 이동
 @app.route('/')
 def home():
-    return render_template('main.html')
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('main.html', userid=user_info["idenfier"])
+    else:
+        return render_template('main.html')
+
+# 작성된 글 불러오기
+@app.route('/getpost', methods=['GET'])
+def show_diary():
+    posts = list(db.postbox.find({}, {'_id': False}))
+    print(posts)
+    return jsonify({'all_post': posts, "msg":"가져오기 성공"})
 
 
 # 글작성 페이지 이동
 @app.route('/write')
 def write():
-    return render_template('writing.html')
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('writing.html', userid=user_info["idenfier"])
+    else:
+        return render_template('writing.html')
+
+
+# 글 작성(디비저장)
+@app.route('/post', methods=['POST'])
+def save_post():
+    location_receive = request.form["location_give"]
+    workout_receive = request.form["workout_give"]
+    address_receive = request.form["address_give"]
+    comment_receive = request.form["comment_give"]
+
+    file = request.files["file_give"]
+
+    extension = file.filename.split('.')[-1]
+
+    today = datetime.now()
+    mytime = today.strftime('%Y년 %m월 %d일 %H시 %M분 %S초')
+
+    filename = f'file-{mytime}'
+
+    save_to = f'static/postimg/{filename}.{extension}'
+    file.save(save_to)
+
+    doc = {
+        'location': location_receive,
+        'workout': workout_receive,
+        'address': address_receive,
+        'comment': comment_receive,
+        'file': f'{filename}.{extension}'
+    }
+    db.postbox.insert_one(doc)
+
+    return jsonify({'msg': '저장완료'})
 
 
 # 로그인 페이지 이동
