@@ -39,10 +39,35 @@ def home():
 
 # 작성된 글 불러오기
 @app.route('/getpost', methods=['GET'])
-def show_diary():
-    posts = list(db.postbox.find({}, {'_id': False}))
-    print(posts)
+def show_postlist():
+    posts = list(db.postbox.find({}))
+    for post in posts:
+        post["_id"] = str(post["_id"])
+    # print(posts)
     return jsonify({'all_post': posts, "msg":"가져오기 성공"})
+
+# 세부 내용 보기(모달)
+@app.route('/modal/<postid>', methods=['POST'])
+def show_modal(post_id):
+    print("모달열기")
+
+    post = db.postbox.find_one({'_id': ObjectId(post_id)})
+
+    data = {
+        'location': post['location'],
+        'workout': post['workout'],
+        'address': post['address'],
+        'comment': post['comment'],
+        'file': post['file'],
+    }
+
+    return jsonify({
+        'result': {
+            'success': 'true',
+            'message': 'modal 가져오기 성공',
+            'data': data,
+        }
+    })
 
 
 # 글작성 페이지 이동
