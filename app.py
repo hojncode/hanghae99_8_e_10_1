@@ -106,9 +106,6 @@ def save_post():
         return jsonify({'msg': '저장완료'})
 
 
-
-
-
 # 로그인 페이지 이동
 @app.route('/login')
 def loginPage():

@@ -34,13 +34,13 @@ function show_cardList() {
                 $('.cards').append(temp_html)
 
 
-            //     let modal_html = ` <div class="photo_detail">
-            // </div>
-            // <div class="comment_detail">${comment}</div>
-            // <div class="location_detail"></div>
-            // <div class="link_detail"></div>`
-            //
-            //     $(`#modal_bg`).append(modal_html)
+                //     let modal_html = ` <div class="photo_detail">
+                // </div>
+                // <div class="comment_detail">${comment}</div>
+                // <div class="location_detail"></div>
+                // <div class="link_detail"></div>`
+                //
+                //     $(`#modal_bg`).append(modal_html)
 
             }
 
