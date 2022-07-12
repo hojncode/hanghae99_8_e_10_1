@@ -28,6 +28,7 @@ db = client.playGround
 # 메인 페이지 이동
 @app.route('/')
 def home():
+    print("hi")
     token_receive = request.cookies.get('mytoken')
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
