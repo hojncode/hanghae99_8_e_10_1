@@ -162,7 +162,7 @@ def login():
 
 # 회원가입 페이지 이동
 @app.route('/signup')
-def singup():
+def signup():
     return render_template('signup.html')
 
 
@@ -194,6 +194,10 @@ def createUser():
 
     return jsonify({'result': 'success', 'msg': '회원가입 완료'})
 
+# 회원정보수정 페이지 이동
+@app.route('/modify')
+def modify():
+    return render_template('modify.html')
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
