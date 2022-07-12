@@ -26,6 +26,7 @@ function check_login() {
 
 // 로그아웃 함수
 function logout() {
+    console.log($.removeCookie('mytoken', {path: '/'}))
     $.removeCookie('mytoken', {path: '/'});
     window.location.href = '/login'
 }

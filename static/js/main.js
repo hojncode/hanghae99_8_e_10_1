@@ -19,15 +19,13 @@ function show_cardList() {
             let rows = response['all_post']
             for (let i = 0; i < rows.length; i++) {
                 let address = rows[i]['address']
-                console.log(address)
                 let comment = rows[i]['comment']
                 let file = "../static/postimg/" + rows[i]['file']
-                console.log(file)
                 let location = rows[i]['location']
                 let workout = rows[i]['workout']
 
                 let temp_html = `<div class="card">
-                                    <img src="${file}" class="card-img-top"  alt="...">
+                                    <img src="${file}" class="card-img-top" onerror="this.src='../static/img/헬스장.jpg'">
                                     <div class="card-body">
                                         <h5 class="card-title" id="card_img">${workout}</h5>
                                         <p class="card-text">${location}</p>
