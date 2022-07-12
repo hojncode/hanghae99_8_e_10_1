@@ -5,9 +5,7 @@ $(document).ready(function(){
 function posting() {
     console.log("post")
   let location = $('#location').val()
-    // console.log(location.val())
   let workout = $("#workout").val()
-    // console.log(workout)
   let address = $("#address").val()
   let comment = $("#comment").val()
 
@@ -20,7 +18,7 @@ function posting() {
   form_data.append("workout_give", workout)
   form_data.append("address_give", address)
   form_data.append("comment_give", comment)
-
+    console.log(form_data)
   $.ajax({
       type: "POST",
       url: "/post",

@@ -59,33 +59,54 @@ def write():
 # 글 작성(디비저장)
 @app.route('/post', methods=['POST'])
 def save_post():
-    location_receive = request.form["location_give"]
-    workout_receive = request.form["workout_give"]
-    address_receive = request.form["address_give"]
-    comment_receive = request.form["comment_give"]
+    try:
+        location_receive = request.form["location_give"]
+        workout_receive = request.form["workout_give"]
+        address_receive = request.form["address_give"]
+        comment_receive = request.form["comment_give"]
+        file_receive = request.files["file_give"]
 
-    file = request.files["file_give"]
+        file = file_receive
 
-    extension = file.filename.split('.')[-1]
+        extension = file.filename.split('.')[-1]
 
-    today = datetime.now()
-    mytime = today.strftime('%Y년 %m월 %d일 %H시 %M분 %S초')
+        today = datetime.now()
+        mytime = today.strftime('%Y년 %m월 %d일 %H시 %M분 %S초')
 
-    filename = f'file-{mytime}'
+        filename = f'file-{mytime}'
 
-    save_to = f'static/postimg/{filename}.{extension}'
-    file.save(save_to)
+        save_to = f'static/postimg/{filename}.{extension}'
+        file.save(save_to)
 
-    doc = {
-        'location': location_receive,
-        'workout': workout_receive,
-        'address': address_receive,
-        'comment': comment_receive,
-        'file': f'{filename}.{extension}'
-    }
-    db.postbox.insert_one(doc)
+        doc = {
+            'location': location_receive,
+            'workout': workout_receive,
+            'address': address_receive,
+            'comment': comment_receive,
+            'file': f'{filename}.{extension}'
+        }
+        db.postbox.insert_one(doc)
 
-    return jsonify({'msg': '저장완료'})
+        return jsonify({'msg': '저장완료'})
+
+    except KeyError:
+        location_receive = request.form["location_give"]
+        workout_receive = request.form["workout_give"]
+        address_receive = request.form["address_give"]
+        comment_receive = request.form["comment_give"]
+
+        doc = {
+            'location': location_receive,
+            'workout': workout_receive,
+            'address': address_receive,
+            'comment': comment_receive,
+        }
+        db.postbox.insert_one(doc)
+
+        return jsonify({'msg': '저장완료'})
+
+
+
 
 
 # 로그인 페이지 이동
