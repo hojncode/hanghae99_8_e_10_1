@@ -57,6 +57,7 @@ function show_cardList() {
     });
 }
 
+// 상세 모달창에 클릭시 세부 내용 보여주기
 function detailmodal(post_id) {
 
     $.ajax({
