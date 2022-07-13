@@ -56,10 +56,6 @@ def show_modal():
     # ObjectId 로 데이터 찾을때 bson 패키지 설치 필요
     post = db.postbox.find_one({'_id': ObjectId(post_id_receive)})
     # print(post['file'])
-    if post['file'] is None:
-        print("no")
-    else:
-        print("yes")
 
     data = {
         'placeName': post['placeName'],
@@ -154,7 +150,7 @@ def loginPage():
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"idenfier": payload["idenfier"]})
-        return render_template('login.html', userid=user_info["idenfier"])
+        return render_template('main.html', userid=user_info["idenfier"])
     else:
         return render_template('login.html')
 
@@ -203,7 +199,13 @@ def login():
 # 회원가입 페이지 이동
 @app.route('/signup')
 def signup():
-    return render_template('signup.html')
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('main.html', userid=user_info["idenfier"])
+    else:
+        return render_template('signup.html')
 
 
 # 회원가입

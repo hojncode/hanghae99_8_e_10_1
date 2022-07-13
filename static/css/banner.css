@@ -25,7 +25,8 @@ body {
 .header_title > h1 {
     margin-left: 1rem;
     display: flex;
-    font-size: 2.5rem;
+    font-size: 3rem;
+    font-weight: 700;
     min-width: 200px;
 }
 
@@ -48,20 +49,20 @@ body {
 .login ul {
     display: flex;
     align-items: flex-end;
+    margin-bottom: 0;
 }
 
 .login ul li {
     list-style: none;
     font-size: 1.1rem;
-}
-
-.login ul li:first-child {
     margin-right: 10px;
 }
 
-.login ul li > a {
+.login ul li a {
     color: white;
     text-decoration: none;
+    font-weight: 500;
+    font-size: 1.2rem;
 }
 
 a:hover {
@@ -74,4 +75,9 @@ a:hover {
 
 .loginture {
     display: none;
+}
+
+#user_id{
+    font-weight: 700;
+    /*font-size: 1.5rem;*/
 }
