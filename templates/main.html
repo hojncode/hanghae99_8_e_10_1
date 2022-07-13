@@ -30,7 +30,14 @@
     <link href="../static/css/main.css" rel="stylesheet">
     <!-- 포스팅 글 가져오기 -->
     <script src="../static/js/main.js" defer></script>
+    <script>
+        let nologin = "{{msg}}"
+        if (nologin !== ""){
+            alert("{{msg}}")
+            window.location.href="/"
+        }
 
+    </script>
 
 </head>
 

@@ -87,7 +87,8 @@ def write():
         user_info = db.users.find_one({"idenfier": payload["idenfier"]})
         return render_template('writing.html', userid=user_info["idenfier"])
     else:
-        return render_template('writing.html')
+        # return jsonify({'result': 'fail', 'msg': '로그인 후 글 작성 가능합니다.'})
+        return render_template('main.html', msg="로그인 후 글 작성 가능합니다.")
 
 
 # 글 작성(디비저장)
