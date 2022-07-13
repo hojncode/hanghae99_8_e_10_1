@@ -108,7 +108,7 @@ function detailmodal(post_id) {
                                                target="_blank">자세한 링크</a>
                                         </p>
                                         <p>작성자 : 헬린이</p>
-                                        
+               
                                         <div id="disqus_thread"></div>
                                         <script>
                                             /**
@@ -127,6 +127,7 @@ function detailmodal(post_id) {
                                             (d.head || d.body).appendChild(s);
                                             })();
                                         </script>
+
                                     </div>
 
                                 </div>
@@ -147,6 +148,7 @@ function openmodal(a) {
 }
 
 $('#modalBg').on('click', function () {
+<<<<<<< HEAD
     $('#modal').css('display', 'none');
 })
 $('#modalBtn').on('click', function () {
@@ -172,3 +174,10 @@ for (const likeBtn of likeBtns) {
     });
 }
 
+=======
+    $('#modal').css('display', 'none');
+})
+$('#modalBtn').on('click', function () {
+    $('#modal').css('display', 'none');
+})
+>>>>>>> 004c48ccbc65817960c1d77181aa2f5afcacf6f7
