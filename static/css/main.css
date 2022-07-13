@@ -1,7 +1,27 @@
 .wrap{
     
     width: 100%;
+    background-size: cover;
+    background-image: linear-gradient(rgba(255,255,0,0.5), rgba(0,0,255,0.5)), url('https://www.dementianews.co.kr/news/photo/201902/1501_1270_5524.jpg');
+    background: #1d466c;
   
+}
+
+.header_title {
+    width: 100%;
+    height: 5%;
+    padding: 1.5rem 0;
+    background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5)), url('https://previews.123rf.com/images/joesive47/joesive471205/joesive47120500001/13488807-%EC%B6%95%EA%B5%AC-%EC%9E%94%EB%94%94.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+#bannerimg {
+    width: 50px;
+    color: white;
 }
 
 /*                    main                   */
@@ -127,3 +147,108 @@ bottom: 250px;
 /*bottom:200px;*/
 /*padding: 20px 40px 20px 40px ;*/
 /*}*/
+
+/*좋아요*/
+
+.heart {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  left: 95%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  animation: fave-heart 1s steps(28);
+}
+.heart:hover {
+  background-position: -2800px 0;
+  transition: background 1s steps(28);
+}
+
+.clicked {
+    color : #7f8c8d;
+}
+
+
+@keyframes fave-heart {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -2800px 0;
+  }
+}
+
+/*댓글*/
+#form-commentInfo{
+    width: 100%;
+}
+
+#comment-count{
+    margin-bottom: 10px;
+}
+
+#comment-input{
+    width: 50%;
+    height: 3.3em;
+}
+
+#submit{
+    background-color: rgb(0, 128,255);
+    width: 5.5em;
+    height: 3.3em;;
+    font-size: 15px;
+    font-weight: bold;
+    color: aliceblue;
+}
+
+#voteUp, #voteDown{
+    width: 3.5em;
+    height: 1.9em;
+    background-color: aqua;
+}
+
+#comments{
+    margin-top: 10px;
+}
+
+.eachComment{
+    width :50%;
+    margin: 10px;
+    padding: 0.5em;
+    border-bottom: 1px solid #c1bcba;
+}
+
+.eachComment .name{
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eachComment .inputValue{
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.eachComment .time{
+    font-size: 0.7em;
+    color: #c1bcba;
+    font-style: oblique;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+
+}
+
+.eachComment .voteDiv{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.eachComment .deleteComment{
+    background-color: red;
+    color: aliceblue;
+}
