@@ -76,6 +76,8 @@ function detailmodal(post_id) {
             let file = "../static/postimg/" + rows['file']
             let location = rows['location']
             let workout = rows['workout']
+            let placeName = rows['placeName']
+            let userid = rows['userid']
 
             if (file == "../static/postimg/") {
                     if (workout == "헬스") {
@@ -109,7 +111,7 @@ function detailmodal(post_id) {
                                             <a href="${address}"
                                                target="_blank">자세한 링크</a>
                                         </p>
-                                        <p>작성자 : 헬린이</p>
+                                        <p>작성자 : ${userid}</p>
 
                                     </div>
 

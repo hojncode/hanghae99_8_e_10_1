@@ -23,7 +23,7 @@ body {
 }
 
 .header_title > h1 {
-    margin-left: 1rem;
+    margin-left: 2rem;
     display: flex;
     font-size: 3rem;
     font-weight: 700;
@@ -41,7 +41,7 @@ body {
 }
 
 .login {
-    margin-right: 1rem;
+    margin-right: 2rem;
     padding: 0 1rem;
     display: flex;
 }

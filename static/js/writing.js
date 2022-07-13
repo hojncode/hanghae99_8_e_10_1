@@ -8,10 +8,14 @@ function posting() {
     let workout = $("#workout").val()
     let address = $("#address").val()
     let comment = $("#comment").val()
+    let user_id = userid
+    // userid는 write.html에서 먼저 받아서 사용
+    // console.log(user_id)
+
 
     // 지역 종류 리뷰 미작성시 포스팅 불가(간단한 유효성 검사)
-    let check = [location, workout, comment]
-    let errmsg = ["지역을", "종류를", "리뷰를"]
+    let check = [placeName, location, workout, comment]
+    let errmsg = ["제목을", "지역을", "종류를", "리뷰를"]
     for (let i =0; i < check.length; i++) {
         if (check[i] == ""){
             alert(errmsg[i] + " 입력해주세요 :)")
@@ -27,6 +31,7 @@ function posting() {
     let form_data = new FormData()
 
     form_data.append("file_give", file)
+    form_data.append("userid_give", user_id)
     form_data.append("placeName_give", placeName)
     form_data.append("location_give", location)
     form_data.append("workout_give", workout)

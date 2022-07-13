@@ -58,6 +58,7 @@ def show_modal():
     # print(post['file'])
 
     data = {
+        'userid': post['userid'],
         'placeName': post['placeName'],
         'location': post['location'],
         'workout': post['workout'],
@@ -92,6 +93,7 @@ def write():
 @app.route('/post', methods=['POST'])
 def save_post():
     try:
+        userid_receive = request.form["userid_give"]
         placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
@@ -112,6 +114,7 @@ def save_post():
         file.save(save_to)
 
         doc = {
+            "userid": userid_receive,
             'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
@@ -123,7 +126,10 @@ def save_post():
 
         return jsonify({'msg': '저장완료'})
 
+    # except를 한 이유는 사진 파일이 없을경우 디비에 아에 빈 데이터로 저장이 되어서 
+    # ""로라도 저장하면 나중에 앞에서 데이터 처리하기 편해서 만든건데 이방법이 좋은건지는 모르겠네요
     except KeyError:
+        userid_receive = request.form["userid_give"]
         placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
@@ -131,6 +137,7 @@ def save_post():
         comment_receive = request.form["comment_give"]
 
         doc = {
+            "userid": userid_receive,
             'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
