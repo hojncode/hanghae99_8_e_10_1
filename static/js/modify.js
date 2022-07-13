@@ -1,53 +1,56 @@
+
+
+
 window.addEventListener('load', () => {
-    const forms = document.getElementsByClassName('validation-form');
-
-    Array.prototype.filter.call(forms, (form) => {
-        form.addEventListener('submit', function (event) {
-            if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-            } else {
-                event.preventDefault();
-                save_order()
-                {
-                    // alert('회원가입 완료!')
-
-                }
-            }
-
-            form.classList.add('was-validated');
-        }, false);
-    });
+    modify_show()
+    // const forms = document.getElementsByClassName('validation-form');
+    //
+    // Array.prototype.filter.call(forms, (form) => {
+    //     form.addEventListener('submit', function (event) {
+    //         if (form.checkValidity() === false) {
+    //             event.preventDefault();
+    //             event.stopPropagation();
+    //         } else {
+    //             event.preventDefault();
+    //             save_order()
+    //             {
+    //                 // alert('회원가입 완료!')
+    //
+    //             }
+    //         }
+    //
+    //         form.classList.add('was-validated');
+    //     }, false);
+    // });
 }, false);
 
-function save_order() {
-
-    let name = $('#name')
-    let nickname = $('#nickname')
-    let idenfier = $('#idenfier')
-    let password = $('#password')
-    let email = $('#email')
-    let number = $('#number')
-    let address = $('#address')
+function modify_show() {
 
     $.ajax({
-        type: 'POST',
-        url: '/users',
-        data: {
-            name_give: name.val(),
-            nick_give: nickname.val(),
-            idenfier_give: idenfier.val(),
-            password_give: password.val(),
-            email_give: email.val(),
-            number_give: number.val(),
-            address_give: address.val()
-        },
+        type: "GET",
+        url: "/getusers",
+        data: {},
         success: function (response) {
-            alert(response['msg'])
-            window.location.replace("/login")
-        }
+
+                //로그인 정보를 가져와서 폼에다가 뿌림
+             let rows = response['all_post']
+               console.log(rows)
+            for (let i = 0; i < rows.length; i++) {
+                let address = rows[i]['address']
+                let email = rows[i]['email']
+                let idenfier = rows[i]['idenfier']
+                let name = rows[i]['name']
+                let nick = rows[i]['nick']
+                let number = rows[i]['number']
+
+            }
+            }
     });
 }
+
+
+
+//회원탈퇴
 
 function user_delete(){
     let user_del = confirm("회원 탈퇴 하시겠습니까?");

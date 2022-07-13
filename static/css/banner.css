@@ -55,7 +55,7 @@ body {
     font-size: 1.1rem;
 }
 
-.login ul li:first-child {
+.login ul li{
     margin-right: 10px;
 }
 

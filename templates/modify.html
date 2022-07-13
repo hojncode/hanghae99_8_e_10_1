@@ -1,73 +1,101 @@
 <!DOCTYPE html>
 <html lang="kor">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--    JQuery-->
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <!-- jQuery cookie 함수-->
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- 구글 폰트 -->
+    <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <title>회원정보수정</title>
+
+    <title>우리동네 운동장</title>
 
     <!-- 배너 css -->
     <link rel="stylesheet" href="../static/css/banner.css">
-    <!-- 회원정보수정 및 회원탈퇴 js -->
-    <script src="../static/js/modify.js" defer></script>
+    <!-- 로그인체크 및 로그아웃 js -->
+    <script src="../static/js/logincheck.js" defer></script>
 
     <!-- css -->
     <link href="../static/css/modify.css" rel="stylesheet">
+    <!-- 글 포스팅 -->
+    <script src="../static/js/modify.js.js" defer></script>
 
 
 </head>
 
 <body>
 <header>
-    <div class="header_title">
-        <h1>
-            <a href="/">우리들의 운동장</a>
-            <img id="bannerimg" src="../static/img/exercise.png">
-        </h1>
-        {#        <div class="header_temp">#}
-        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
-        {#        </div>#}
+   <div class="site-mobile-menu site-navbar-target">
+		<div class="site-mobile-menu-header">
+			<div class="site-mobile-menu-close">
+				<span class="icofont-close js-menu-toggle"></span>
+			</div>
+		</div>
+		<div class="site-mobile-menu-body"></div>
+	</div>
 
-        <div class="login">
-            <ul class="loginfalse">
-                <li>
-                    <a href="/login">로그인</a>
-                </li>
-                <li>
-                    <a href="/signup">회원가입</a>
-                </li>
-            </ul>
-            <ul class="loginture">
-                <li>
-                    <a href="/login">{{ userid }}</a>
-                </li>
-                <li>
-                    <a onclick="logout()">로그아웃</a>
-                </li>
-            </ul>
+	<nav class="site-nav">
+		<div class="container">
+			<div class="site-navigation">
+				<a href="/" class="logo m-0">우리동네 운동장</a>
 
-        </div>
 
-    </div>
-</header>
+				<ul id="loginfalse" class=" js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+					<li>
+						<p>현재온도 : <span id="temp">--</span>도</p>
+					</li>
+					<li>
+						<a href="/login">로그인</a>
+					</li>
+					<li>
+						<a href="/signup">회원가입</a>
+					</li>
+
+				</ul>
+
+                <ul class="loginture js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+					<li>
+						<a href="/modify">{{ userid }}</a>
+					</li>
+					<li>
+						<a onclick="logout()">로그아웃</a>
+					</li>
+
+
+				</ul>
+
+
+				<a href="#" class="burger ms-auto float-end site-menu-toggle mt-2 js-menu-toggle d-inline-block d-lg-none light" data-toggle="collapse" data-target="#main-navbar">
+					<span></span>
+				</a>
+			</div>
+		</div>
+	</nav>
+
+
 <div class="container">
     <div class="input-form-backgroud row">
         <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">회원정보수정</h4>
-            <form class="validation-form" novalidate>
+            <form class="validation-form" novalidate id="modify_form">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="name">이름</label>
@@ -118,16 +146,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="address2">주소<span class="text-muted">&nbsp;(필수 아님)</span></label>
+                    <label for="address2">주소<span class="text-muted"></span></label>
                     <input type="text" class="form-control" id="address" placeholder="">
                 </div>
 
 
                 <hr class="mb-4">
-{#                <div class="custom-control custom-checkbox">#}
-{#                    <input type="checkbox" class="custom-control-input" id="aggrement" required>#}
-{#                    <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>#}
-{#                </div>#}
                 <div class="mb-2"></div>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">회원정보수정</button>
                 <button class="btn btn-danger btn-lg btn-block" type="submit" onclick="user_delete()">회원탈퇴</button>
@@ -136,7 +160,29 @@
     </div>
 </div>
 
-</body>
+<script src="../static/js/bootstrap.bundle.min.js"></script>
+	<script src="../static/js/tiny-slider.js"></script>
+	<script src="../static/js/aos.js"></script>
+	<script src="../static/js/navbar.js"></script>
+	<script src="../static/js/glightbox.min.js"></script>
+	<script src="../static/js/rellax.min.js"></script>
+	<script src="../static/js/custom.js"></script>
 
+	  <!-- 배너 css -->
+    <link rel="stylesheet" href="../static/css/banner.css">
+        <!-- 로그인체크 및 로그아웃 js -->
+     <script src="../static/js/logincheck.js" defer></script>
+
+
+
+ <!-- jQuery cookie 함수-->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+</body>
 
 </html>

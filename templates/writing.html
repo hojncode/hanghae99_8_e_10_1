@@ -1,80 +1,82 @@
 <!DOCTYPE html>
 <html lang="kor">
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ 	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+	<meta name="author" content="Untree.co">
+	<!-- <link rel="shortcut icon" href="favicon.png"> 탭아이콘 -->
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap5" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
-    <!-- jQuery cookie 함수-->
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <!-- 구글폰트 -->
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
-    <title>우리동네 운동장</title>
+	<link rel="stylesheet" href="../static/fonts/icomoon/style.css">
+	<link rel="stylesheet" href="../static/fonts/feather/style.css">
 
-    <!-- 배너 css -->
-    <link rel="stylesheet" href="../static/css/banner.css">
-    <!-- 로그인체크 및 로그아웃 js -->
-    <script src="../static/js/logincheck.js" defer></script>
-
-    <!-- css -->
-    <link href="../static/css/writing.css" rel="stylesheet">
-    <!-- 글 포스팅 -->
-    <script src="../static/js/writing.js" defer></script>
-
+	<link rel="stylesheet" href="../static/css/tiny-slider.css">
+	<link rel="stylesheet" href="../static/css/aos.css">
+	<link rel="stylesheet" href="../static/css/glightbox.min.css">
+	<link rel="stylesheet" href="../static/css/writing.css">
 
 </head>
-
 <body>
-<header>
-    <div class="header_title">
-        <h1>
-            <a href="/">우리들의 운동장</a>
-            <img id="bannerimg" src="../static/img/exercise.png">
-        </h1>
-        {#        <div class="header_temp">#}
-        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
-        {#        </div>#}
 
-        <div class="login">
-            <ul class="loginfalse">
-                <li>
-                    <a href="/login">로그인</a>
-                </li>
-                <li>
-                    <a href="/signup">회원가입</a>
-                </li>
-            </ul>
-            <ul class="loginture">
-                <li>
-                    <a href="/login">{{ userid }}</a>
-                </li>
-                <li>
-                    <a onclick="logout()">로그아웃</a>
-                </li>
-            </ul>
 
-        </div>
 
-    </div>
-</header>
-<div class="posting-box">
+
+<div class="site-mobile-menu site-navbar-target">
+		<div class="site-mobile-menu-header">
+			<div class="site-mobile-menu-close">
+				<span class="icofont-close js-menu-toggle"></span>
+			</div>
+		</div>
+		<div class="site-mobile-menu-body"></div>
+	</div>
+
+	<nav class="site-nav">
+		<div class="container">
+			<div class="site-navigation">
+				<a href="/" class="logo m-0">우리동네 운동장</a>
+
+
+				<ul class="loginfalse js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+					<li>
+						<p>현재온도 : <span id="temp">--</span>도</p>
+					</li>
+					<li>
+						<a href="/login">로그인</a>
+					</li>
+					<li>
+						<a href="/signup">회원가입</a>
+					</li>
+				</ul>
+
+		  		<ul class="loginture js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+					<li>
+						<a href="/modify">{{ userid }}</a>
+					</li>
+					<li>
+						<a onclick="logout()">로그아웃</a>
+					</li>
+
+				</ul>
+
+
+				<a href="#" class="burger ms-auto float-end site-menu-toggle mt-2 js-menu-toggle d-inline-block d-lg-none light" data-toggle="collapse" data-target="#main-navbar">
+					<span></span>
+				</a>
+			</div>
+		</div>
+	</nav>
+
+
+<main>
+   <div class="posting-box">
 
     <label class="mr-sm-2">지역 선택</label>
     <select class="custom-select mr-sm-2" id="location">
@@ -115,15 +117,13 @@
              src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
         <div class="custom-file">
 
-            <div class="input-group mb-3">
-                <input type="file" class="form-control" id="input-image" accept="image/*">
-{#                <label class="input-group-text" for="input-image">Upload</label>#}
-            </div>
-            {#            <input type="file" class="custom-file-input" id="input-image" accept="image/*">#}
-            {#            <label class="custom-file-label" for="input-image">사진 선택하기</label>#}
+         <div class="input-group mb-3">
+              <input type="file" class="form-control" id="input-image" accept="image/*">
+             <label class="input-group-text" for="input-image">Upload</label>
         </div>
 
-        {#        <input style="display: block;" type="file" id="input-image" accept="image/*">#}
+       </div>
+
     </div>
 
 
@@ -133,7 +133,31 @@
 
     <button id="postBtn" onclick="posting()" type="button" class="btn btn-primary">저장하기</button>
 
+</div>
+</main>
+
+
+<script src="../static/js/bootstrap.bundle.min.js"></script>
+	<script src="../static/js/tiny-slider.js"></script>
+	<script src="../static/js/aos.js"></script>
+	<script src="../static/js/navbar.js"></script>
+	<script src="../static/js/glightbox.min.js"></script>
+	<script src="../static/js/rellax.min.js"></script>
+	<script src="../static/js/custom.js"></script>
+
+	  <!-- 배너 css -->
+    <link rel="stylesheet" href="../static/css/banner.css">
+    <!-- 로그인체크 및 로그아웃 js -->
+    <script src="../static/js/logincheck.js" defer></script>
+  <!-- writing.js연동 -->
+     <script src="../static/js/writing.js" defer></script>
+
+ <!-- jQuery cookie 함수-->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 </body>
-
 </html>

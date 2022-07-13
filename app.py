@@ -15,7 +15,7 @@ app = Flask(__name__)
 # 시간 라이브러리
 import datetime
 # 토큰을 만들때 유효기간을 설정하기 위해서 서버시간을 가져와서 그로부터 얼마만큼 유효하게 설정하기 위해 필요
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta              
 
 # 파이몽고 라이브러리
 from pymongo import MongoClient
@@ -198,6 +198,13 @@ def createUser():
 @app.route('/modify')
 def modify():
     return render_template('modify.html')
+
+# 회원정보  불러오기
+@app.route('/getusers', methods=['GET'])
+def show_user():
+    users = list(db.users.find({}, {'_id': False}))
+    print(users)
+    return jsonify({'all_post': users, "msg":"회원정보 불러오기 성공"})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

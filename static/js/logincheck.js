@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $(".loginfalse").hide()
-    $(".loginture").hide()
+    $("#loginfalse").hide()
+    $("#loginture").hide()
     check_login()
     // set_temp()
 })
@@ -15,10 +15,12 @@ function check_login() {
         success: function (response) {
             let result = response['result'];
             let success = result['success'];
+            console.log(success)
+
             if (success == 'true') {
-                $('.loginture').show();
+                $('#loginture').show();
             } else {
-                $('.loginfalse').show();
+                $('#loginfalse').show();
             }
         }
     });

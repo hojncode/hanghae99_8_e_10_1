@@ -3,7 +3,9 @@
 $(document).ready(function () {
     $(".cards").empty()
     show_cardList()
+     show_login()
 });
+
 
 
 /* card GET 코드 */
