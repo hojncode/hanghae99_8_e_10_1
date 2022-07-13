@@ -1,6 +1,7 @@
 /* 화면이 로딩이되면 실행하는 코드*/
 
 $(document).ready(function () {
+    set_temp()
     $(".cards").empty()
     show_cardList()
 });
@@ -43,7 +44,7 @@ function show_cardList() {
                 }
 
                 let temp_html = `<div class="card" id="${post_id}" onclick="openmodal('${post_id}')">
-                                    <img src="${file}" class="card-img-top" onerror="this.src='../static/img/헬스장.jpg'">
+                                    <img src="${file}" class="card-img-top" onerror="this.src='../static/img/exercise.png'">
                                     <div class="card-body">
                                         <h5 class="card-title" id="card_img">${workout}</h5>
                                         <p class="card-text">${location}</p>
@@ -95,7 +96,7 @@ function detailmodal(post_id) {
             let temp_html = `<div id="modalCard">
                                 <div id="modalbox1">
                                     <div id="modalimgbox">
-                                        <img id="modalimg" src="${file}" onerror="this.src='../static/img/헬스장.jpg'">
+                                        <img id="modalimg" src="${file}" onerror="this.src='../static/img/exercise.png'">
                                     </div>
 
                                     <div id="modalinpomation">

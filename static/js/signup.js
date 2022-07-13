@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    set_temp()
+});
+
 window.addEventListener('load', () => {
     const forms = document.getElementsByClassName('validation-form');
 

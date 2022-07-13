@@ -26,15 +26,17 @@
     <link rel="stylesheet" href="../static/css/banner.css">
     <!-- 로그인체크 및 로그아웃 js -->
     <script src="../static/js/logincheck.js" defer></script>
+    <!-- 현재 기온 js -->
+    <script src="../static/js/weather.js" defer></script>
     <!-- css -->
     <link href="../static/css/main.css" rel="stylesheet">
     <!-- 포스팅 글 가져오기 -->
     <script src="../static/js/main.js" defer></script>
     <script>
         let nologin = "{{msg}}"
-        if (nologin !== ""){
+        if (nologin !== "") {
             alert("{{msg}}")
-            window.location.href="/"
+            window.location.href = "/"
         }
 
     </script>
@@ -48,12 +50,12 @@
             <a href="/">우리들의 운동장</a>
             <img id="bannerimg" src="../static/img/exercise.png">
         </h1>
-        {#        <div class="header_temp">#}
-        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
-        {#        </div>#}
 
         <div class="login">
             <ul class="loginfalse">
+                <li>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
+                </li>
                 <li>
                     <a href="/login">로그인</a>
                 </li>
@@ -64,13 +66,16 @@
             </ul>
             <ul class="loginture">
                 <li>
-                    <a href="/login">{{ userid }}</a>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
+                </li>
+                <li>
+                    <a id="user_id" href="/login">{{ userid }}</a>
                 </li>
                 <li>
                     <a onclick="logout()">로그아웃</a>
                 </li>
 
-                 <li>
+                <li>
                     <a href="/modify">회원정보수정</a>
                 </li>
             </ul>
