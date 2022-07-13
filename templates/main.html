@@ -16,6 +16,45 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
+    <script>
+        function toggle_like(post_id, type) {
+        console.log(post_id, type)
+        let $a_like = $(`#${post_id} a[aria-label='heart']`)
+        let $i_like = $a_like.find("i")
+        if ($i_like.hasClass("fa-heart")) {
+            $.ajax({
+                type: "POST",
+                url: "/update_like",
+                data: {
+                    post_id_give: post_id,
+                    type_give: type,
+                    action_give: "unlike"
+                },
+                success: function (response) {
+                    console.log("unlike")
+                    $i_like.addClass("fa-heart-o").removeClass("fa-heart")
+                    $a_like.find("span.like-num").text(response["count"])
+                }
+            })
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/update_like",
+                data: {
+                    post_id_give: post_id,
+                    type_give: type,
+                    action_give: "like"
+                },
+                success: function (response) {
+                    console.log("like")
+                    $i_like.addClass("fa-heart").removeClass("fa-heart-o")
+                    $a_like.find("span.like-num").text(response["count"])
+                }
+            })
+
+        }
+    }
+    </script>
     <!--구글폰트-->
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
@@ -35,15 +74,15 @@
 </head>
 
 <body>
-<header>
+<div>
     <div class="header_title">
         <h1>
-            <a href="/">우리들의 운동장</a>
+            <a>우리동네 운동장</a>
             <img id="bannerimg" src="../static/img/exercise.png">
-        </h1>
-        {#        <div class="header_temp">#}
-        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
-        {#        </div>#}
+{#        </h1>#}
+{#                <div class="header_temp">#}
+{#                    <p>현재온도 : <span id="temp">--</span>도</p>#}
+{#                </div>#}
 
         <div class="login">
             <ul class="loginfalse">
@@ -53,6 +92,7 @@
                 <li>
                     <a href="/signup">회원가입</a>
                 </li>
+
             </ul>
             <ul class="loginture">
                 <li>
@@ -60,6 +100,10 @@
                 </li>
                 <li>
                     <a onclick="logout()">로그아웃</a>
+                </li>
+
+                 <li>
+                    <a href="/modify">회원정보수정</a>
                 </li>
             </ul>
 
@@ -82,48 +126,12 @@
                         <h5 class="card-title">운동명</h5>
                         <p class="card-text">카테고리</p>
                         <p class="card-text">지역명</p>
+
                     </div>
                 </div>
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-                    </div>
-                </div>
+
+
+
                 <div class="card">
                     <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
                     <div class="card-body">
@@ -144,6 +152,10 @@
 
         </div>
     </section>
+
+
+
+
     <footer>
 
     </footer>
@@ -163,6 +175,19 @@
 
 
     </div>
+</div>
+
+    <div id="form-commentInfo">
+        <div id="comment-count">댓글 <span id="count">0</span></div>
+        <input id="comment-input" placeholder="댓글을 입력해 주세요.">
+        <button id="submit">등록</button>
+    </div>
+    <div id=comments>
+
+    </div>
+    <script src="index.js"></script>
+
+
 </div>
 
 
