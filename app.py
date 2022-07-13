@@ -5,20 +5,21 @@ import hashlib
 # jwt 토큰 생성
 import jwt
 
-SECRET_KEY = "sparta"
-
-app = Flask(__name__)
-
-# from app_user import user
-# app.register_blueprint(user)
-
 # 시간 라이브러리
 import datetime
 # 토큰을 만들때 유효기간을 설정하기 위해서 서버시간을 가져와서 그로부터 얼마만큼 유효하게 설정하기 위해 필요
 from datetime import datetime, timedelta              
 
+######## bson 패키지 설치 필요! ########
+#pymongo에서 _id의 ObjectId를 사용하기 위해 필요
+from bson.objectid import ObjectId
+
 # 파이몽고 라이브러리
 from pymongo import MongoClient
+
+SECRET_KEY = "sparta"
+
+app = Flask(__name__)
 
 # client = MongoClient('localhost', 27017)
 client = MongoClient('15.165.158.21', 27017, username="test", password="test")
@@ -39,10 +40,42 @@ def home():
 
 # 작성된 글 불러오기
 @app.route('/getpost', methods=['GET'])
-def show_diary():
-    posts = list(db.postbox.find({}, {'_id': False}))
-    print(posts)
+def show_postlist():
+    posts = list(db.postbox.find({}))
+    for post in posts:
+        post["_id"] = str(post["_id"])
+    # print(posts)
     return jsonify({'all_post': posts, "msg":"가져오기 성공"})
+
+# 세부 내용 보기(모달)
+@app.route('/modal', methods=['POST'])
+def show_modal():
+    print("모달열기")
+    post_id_receive = request.form["post_id_give"]
+
+    # ObjectId 로 데이터 찾을때 bson 패키지 설치 필요
+    post = db.postbox.find_one({'_id': ObjectId(post_id_receive)})
+    # print(post['file'])
+    if post['file'] is None:
+        print("no")
+    else:
+        print("yes")
+
+    data = {
+        'location': post['location'],
+        'workout': post['workout'],
+        'address': post['address'],
+        'comment': post['comment'],
+        'file': post['file'],
+    }
+
+    return jsonify({
+        'result': {
+            'success': 'true',
+            'message': 'modal 가져오기 성공',
+            'data': data,
+        }
+    })
 
 
 # 글작성 페이지 이동
@@ -54,7 +87,8 @@ def write():
         user_info = db.users.find_one({"idenfier": payload["idenfier"]})
         return render_template('writing.html', userid=user_info["idenfier"])
     else:
-        return render_template('writing.html')
+        # return jsonify({'result': 'fail', 'msg': '로그인 후 글 작성 가능합니다.'})
+        return render_template('main.html', msg="로그인 후 글 작성 가능합니다.")
 
 
 # 글 작성(디비저장)
@@ -101,6 +135,7 @@ def save_post():
             'workout': workout_receive,
             'address': address_receive,
             'comment': comment_receive,
+            'file': "",
         }
         db.postbox.insert_one(doc)
 

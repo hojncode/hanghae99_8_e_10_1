@@ -165,12 +165,116 @@
 
     <!-- 포스팅 글 가져오기 -->
     <script src="../static/js/main.js" defer></script>
+    <script>
+        let nologin = "{{msg}}"
+        if (nologin !== ""){
+            alert("{{msg}}")
+            window.location.href="/"
+        }
 
+<<<<<<< HEAD
  <!-- jQuery cookie 함수-->
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+=======
+    </script>
+
+</head>
+
+<body>
+<header>
+    <div class="header_title">
+        <h1>
+            <a href="/">우리들의 운동장</a>
+            <img id="bannerimg" src="../static/img/exercise.png">
+        </h1>
+        {#        <div class="header_temp">#}
+        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
+        {#        </div>#}
+
+        <div class="login">
+            <ul class="loginfalse">
+                <li>
+                    <a href="/login">로그인</a>
+                </li>
+                <li>
+                    <a href="/signup">회원가입</a>
+                </li>
+
+            </ul>
+            <ul class="loginture">
+                <li>
+                    <a href="/login">{{ userid }}</a>
+                </li>
+                <li>
+                    <a onclick="logout()">로그아웃</a>
+                </li>
+
+                 <li>
+                    <a href="/modify">회원정보수정</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</header>
+<div class="wrap">
+    <nav>
+        <div>
+            <button type="button" id="addPost"><a href="/write">운동추가하기</a></button>
+        </div>
+    </nav>
+    <section>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col cards">
+                <div class="card">
+                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">운동명</h5>
+                        <p class="card-text">카테고리</p>
+                        <p class="card-text">지역명</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 세부 모달창 레이어-->
+    <div id="modal">
+        <div id="modalBg"></div>
+
+        <div id="modalCard">
+            <div id="modalbox1">
+                <div id="modalimgbox">
+                    <img id="modalimg" src="../static/img/헬스장.jpg" alt="...">
+                </div>
+
+                <div id="modalinpomation">
+                    <h5>넥스트 짐</h5>
+                    <p>헬스</p>
+                    <p>서울</p>
+                    <p>
+                        <a href="https://map.naver.com/v5/search/%EB%84%A5%EC%8A%A4%ED%8A%B8%EC%A7%90/place/21710456?placePath=%3Fentry=pll%26from=nx%26fromNxList=true&c=14149072.0849283,4478284.9205608,15,0,0,0,dh"
+                           target="_blank">자세한 링크</a>
+                    </p>
+                    <p>작성자 : 헬린이</p>
+
+                </div>
+
+            </div>
+            <div id="modalbox2">
+                <p id="review">리뷰 : 시설이 깨끗하고 너무 좋아요 자주 갑니다!!</p>
+            </div>
+        </div>
+        <button type="button" id="modalBtn">닫기</button>
+    </div>
+</div>
+
+>>>>>>> 679115574475713d64c85c9476b6ce2779c2c571
 
 </body>
 </html>
