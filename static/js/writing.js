@@ -2,6 +2,7 @@ $(document).ready(function () {
 });
 
 function posting() {
+    let placeName = $('#placeName').val()
     let location = $('#location').val()
     let workout = $("#workout").val()
     let address = $("#address").val()
@@ -25,6 +26,7 @@ function posting() {
     let form_data = new FormData()
 
     form_data.append("file_give", file)
+    form_data.append("placeName_give", placeName)
     form_data.append("location_give", location)
     form_data.append("workout_give", workout)
     form_data.append("address_give", address)

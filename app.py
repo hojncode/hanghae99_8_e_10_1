@@ -62,6 +62,7 @@ def show_modal():
         print("yes")
 
     data = {
+        'placeName': post['placeName'],
         'location': post['location'],
         'workout': post['workout'],
         'address': post['address'],
@@ -95,6 +96,7 @@ def write():
 @app.route('/post', methods=['POST'])
 def save_post():
     try:
+        placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
         address_receive = request.form["address_give"]
@@ -114,6 +116,7 @@ def save_post():
         file.save(save_to)
 
         doc = {
+            'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
             'address': address_receive,
@@ -125,12 +128,14 @@ def save_post():
         return jsonify({'msg': '저장완료'})
 
     except KeyError:
+        placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
         address_receive = request.form["address_give"]
         comment_receive = request.form["comment_give"]
 
         doc = {
+            'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
             'address': address_receive,

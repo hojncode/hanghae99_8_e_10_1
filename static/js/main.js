@@ -21,6 +21,7 @@ function show_cardList() {
                 // let address = rows[i]['address']
                 // let comment = rows[i]['comment']
                 let file = "../static/postimg/" + rows[i]['file']
+                let placeName = rows[i]['placeName']
                 let location = rows[i]['location']
                 let workout = rows[i]['workout']
 
@@ -45,9 +46,10 @@ function show_cardList() {
                 let temp_html = `<div class="card" id="${post_id}" onclick="openmodal('${post_id}')">
                                     <img src="${file}" class="card-img-top" onerror="this.src='../static/img/헬스장.jpg'">
                                     <div class="card-body">
+                                        <h3>${placeName}</h3>
                                         <h5 class="card-title" id="card_img">${workout}</h5>
                                         <p class="card-text">${location}</p>
-                                    </div>
+                                    </div>  
                                 </div>`
                 $('.cards').append(temp_html)
             }
@@ -99,7 +101,7 @@ function detailmodal(post_id) {
                                     </div>
 
                                     <div id="modalinpomation">
-                                        <h5>넥스트 짐</h5>
+                                        <h5>${placeName}</h5>
                                         <p>${workout}</p>
                                         <p>${location}</p>
                                         <p>
