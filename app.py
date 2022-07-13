@@ -5,20 +5,21 @@ import hashlib
 # jwt 토큰 생성
 import jwt
 
-SECRET_KEY = "sparta"
-
-app = Flask(__name__)
-
-# from app_user import user
-# app.register_blueprint(user)
-
 # 시간 라이브러리
 import datetime
 # 토큰을 만들때 유효기간을 설정하기 위해서 서버시간을 가져와서 그로부터 얼마만큼 유효하게 설정하기 위해 필요
 from datetime import datetime, timedelta
 
+######## bson 패키지 설치 필요! ########
+#pymongo에서 _id의 ObjectId를 사용하기 위해 필요
+from bson.objectid import ObjectId
+
 # 파이몽고 라이브러리
 from pymongo import MongoClient
+
+SECRET_KEY = "sparta"
+
+app = Flask(__name__)
 
 # client = MongoClient('localhost', 27017)
 client = MongoClient('15.165.158.21', 27017, username="test", password="test")
@@ -47,11 +48,18 @@ def show_postlist():
     return jsonify({'all_post': posts, "msg":"가져오기 성공"})
 
 # 세부 내용 보기(모달)
-@app.route('/modal/<postid>', methods=['POST'])
-def show_modal(post_id):
+@app.route('/modal', methods=['POST'])
+def show_modal():
     print("모달열기")
+    post_id_receive = request.form["post_id_give"]
 
-    post = db.postbox.find_one({'_id': ObjectId(post_id)})
+    # ObjectId 로 데이터 찾을때 bson 패키지 설치 필요
+    post = db.postbox.find_one({'_id': ObjectId(post_id_receive)})
+    # print(post['file'])
+    if post['file'] is None:
+        print("no")
+    else:
+        print("yes")
 
     data = {
         'location': post['location'],
@@ -126,6 +134,7 @@ def save_post():
             'workout': workout_receive,
             'address': address_receive,
             'comment': comment_receive,
+            'file': "",
         }
         db.postbox.insert_one(doc)
 
