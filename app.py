@@ -29,7 +29,7 @@ db = client.playGround
 # 메인 페이지 이동
 @app.route('/')
 def home():
-    print("hi")
+    # print("hi")
     token_receive = request.cookies.get('mytoken')
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
@@ -42,9 +42,10 @@ def home():
 @app.route('/getpost', methods=['GET'])
 def show_postlist():
     posts = list(db.postbox.find({}))
+    # print(posts)
     for post in posts:
         post["_id"] = str(post["_id"])
-    # print(posts)
+        # print(post["_id"])
     return jsonify({'all_post': posts, "msg":"가져오기 성공"})
 
 # 세부 내용 보기(모달)
@@ -56,8 +57,13 @@ def show_modal():
     # ObjectId 로 데이터 찾을때 bson 패키지 설치 필요
     post = db.postbox.find_one({'_id': ObjectId(post_id_receive)})
     # print(post['file'])
+    # print(post)
+
+    post["_id"] = str(post["_id"])
+    # print(post["_id"])
 
     data = {
+        'postid': post["_id"],
         'userid': post['userid'],
         'placeName': post['placeName'],
         'location': post['location'],
@@ -72,6 +78,21 @@ def show_modal():
             'success': 'true',
             'message': 'modal 가져오기 성공',
             'data': data,
+        }
+    })
+
+# 게시물 삭제(모달)
+@app.route('/delpost', methods=['POST'])
+def del_post():
+    print("게시물 삭제")
+    post_id_receive = request.form["post_id_give"]
+
+    db.postbox.delete_one({'_id': ObjectId(post_id_receive)})
+
+    return jsonify({
+        'result': {
+            'success': 'true',
+            'msg': '글삭제',
         }
     })
 

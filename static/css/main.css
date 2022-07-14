@@ -138,18 +138,25 @@ review {
     width: 200px;
 }
 
-#modalBtn {
+.modalBtn {
     position: fixed;
     bottom: 5%;
     left: 47%;
-    background-color: white;
     display: block;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
+
     /*margin: 0 auto;*/
     /*width: ;*/
     /*height: 70%;*/
+}
 
+.modalBtn2{
+    background-color: white;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+}
+
+.hide{
+    display: none;
 }

@@ -44,6 +44,9 @@
             alert("{{msg}}")
             window.location.href = "/"
         }
+        // 회원 탈퇴시 로그인 유저 아이디필요
+        let userID = "{{ userid }}"
+        // console.log(userID)
     </script>
 
 </head>
@@ -134,7 +137,10 @@
                 <p id="review">리뷰 : 시설이 깨끗하고 너무 좋아요 자주 갑니다!!</p>
             </div>
         </div>
-        <button type="button" id="modalBtn">닫기</button>
+<!--        <div class="modalBtn">-->
+<!--            <button type="button" id="modalclose" class="modalBtn2">닫기</button>-->
+<!--            <button type="button" id="modaldel" class="modalBtn2">삭제</button>-->
+<!--        </div>-->
     </div>
 </div>
 
