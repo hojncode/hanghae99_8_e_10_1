@@ -140,7 +140,10 @@ function openmodal(a) {
 
 $('#modalBg').on('click', function () {
     $('#modal').css('display', 'none');
+    // $('#modalCard').empty()
+    $('#modalCard').remove()
 })
 $('#modalBtn').on('click', function () {
     $('#modal').css('display', 'none');
+    $('#modalCard').remove()
 })
