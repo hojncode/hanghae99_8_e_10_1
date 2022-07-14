@@ -74,7 +74,7 @@
                     <a>현재 온도 : <span class="temp"></span>℃</a>
                 </li>
                 <li>
-                    <a id="user_id" href="/login">{{ userid }}</a>
+                    <a id="user_id" href="/modify">{{ userid }}</a>
                 </li>
                 <li>
                     <a onclick="logout()">로그아웃</a>
@@ -86,30 +86,28 @@
     </div>
 </header>
 <div class="posting-box">
+    <label class="mr-sm-2">나만의 운동장 소개</label>
+    <input type="email" class="form-control" id="placeName" placeholder="내 운동장 이름짓기">
 
-   <input type="email" class="form-control" id="placeName" placeholder="내 장소 이름짓기">
-
-    <label class="mr-sm-2">지역 선택</label>
+    <label class="mr-sm-2">지역</label>
     <select class="custom-select mr-sm-2" id="location">
         <option value="">지역 선택</option>
         <option value="서울">서울</option>
         <option value="경기도">경기도</option>
-        <option value="광주">광주</option>
+        <option value="인천">인천</option>
         <option value="대전">대전</option>
         <option value="대구">대구</option>
         <option value="부산">부산</option>
-        <option value="인천">인천</option>
+        <option value="광주">울산</option>
+        <option value="광주">광주</option>
         <option value="강원도">강원도</option>
-        <option value="경상북도">경상북도</option>
-        <option value="경상남도">경상남도</option>
-        <option value="전라북도">전라북도</option>
-        <option value="전라남도">전라남도</option>
-        <option value="충청북도">충청북도</option>
-        <option value="강원도">강원도</option>
+        <option value="경상북도">경상도</option>
+        <option value="전라북도">전라도</option>
+        <option value="충청북도">충청도</option>
         <option value="강원도">제주</option>
     </select>
 
-    <label class="mr-sm-2">운동선택</label>
+    <label class="mr-sm-2">운동 종류</label>
     <select class="custom-select mr-sm-2" id="workout">
 
         <option value="">운동 선택</option>
@@ -130,18 +128,15 @@
 
             <div class="input-group mb-3">
                 <input type="file" class="form-control" id="input-image" accept="image/*">
-{#                <label class="input-group-text" for="input-image">Upload</label>#}
             </div>
-            {#            <input type="file" class="custom-file-input" id="input-image" accept="image/*">#}
-            {#            <label class="custom-file-label" for="input-image">사진 선택하기</label>#}
         </div>
-
-        {#        <input style="display: block;" type="file" id="input-image" accept="image/*">#}
     </div>
 
 
+    <label class="mr-sm-2">내 운동장 자세한 링크</label>
     <input type="email" class="form-control" id="address" placeholder="장소 추가 정보 링크">
 
+    <label class="mr-sm-2">내 운동장 리뷰하기</label>
     <textarea class="form-control" id="comment" rows="3" placeholder="간단한 리뷰 :)"></textarea>
 
     <button id="postBtn" onclick="posting()" type="button" class="btn btn-primary">저장하기</button>

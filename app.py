@@ -197,6 +197,12 @@ def login():
         # SECRET_KEY를 임의로 설정하여 SECRET_KEY를 가지고 알고리즘 암호화 하여 토큰을 만듬
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
+        # 로컬 서버가 아닌 ec2 서버에 배포시 로그인 오류 문제 발생
+        # python3에서는 기본이 utf-8이기 때문에 굳이 decode를 사용할 필요가 없다고 함
+        # token 생성 코드에 .decode(‘utf-8’)을 붙여 스트링 값으로 바꿔서 해결(Local서버에서 실행 시, decode() 함수 제거해야 동작됨)
+        # 아래는 ec2 서버에 올릴때 사용 롤컬서버는 .decode(‘utf-8’) 미사용
+        # token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+
         # 토큰을 만들면 클라이언트쪽으로 보내줌
         return jsonify({'result': 'success', 'msg': '로그인 성공.', 'token': token, })
     else:
@@ -253,7 +259,14 @@ def createUser():
 # 회원정보수정 페이지 이동
 @app.route('/modify')
 def modify():
-    return render_template('modify.html')
+
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('modify.html', userid=user_info["idenfier"])
+    else:
+        return render_template('main.html')
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
