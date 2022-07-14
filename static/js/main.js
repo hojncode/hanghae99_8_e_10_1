@@ -1,6 +1,7 @@
 /* 화면이 로딩이되면 실행하는 코드*/
 
 $(document).ready(function () {
+    set_temp()
     $(".cards").empty()
     show_cardList()
 });
@@ -21,6 +22,7 @@ function show_cardList() {
                 // let address = rows[i]['address']
                 // let comment = rows[i]['comment']
                 let file = "../static/postimg/" + rows[i]['file']
+                let placeName = rows[i]['placeName']
                 let location = rows[i]['location']
                 let workout = rows[i]['workout']
 
@@ -43,11 +45,12 @@ function show_cardList() {
                 }
 
                 let temp_html = `<div class="card" id="${post_id}" onclick="openmodal('${post_id}')">
-                                    <img src="${file}" class="card-img-top" onerror="this.src='../static/img/헬스장.jpg'">
+                                    <img src="${file}" class="card-img-top" onerror="this.src='../static/img/exercise.png'">
                                     <div class="card-body">
+                                        <h3>${placeName}</h3>
                                         <h5 class="card-title" id="card_img">${workout}</h5>
                                         <p class="card-text">${location}</p>
-                                    </div>
+                                    </div>  
                                 </div>`
                 $('.cards').append(temp_html)
             }
@@ -73,6 +76,8 @@ function detailmodal(post_id) {
             let file = "../static/postimg/" + rows['file']
             let location = rows['location']
             let workout = rows['workout']
+            let placeName = rows['placeName']
+            let userid = rows['userid']
 
             if (file == "../static/postimg/") {
                     if (workout == "헬스") {
@@ -95,18 +100,18 @@ function detailmodal(post_id) {
             let temp_html = `<div id="modalCard">
                                 <div id="modalbox1">
                                     <div id="modalimgbox">
-                                        <img id="modalimg" src="${file}" onerror="this.src='../static/img/헬스장.jpg'">
+                                        <img id="modalimg" src="${file}" onerror="this.src='../static/img/exercise.png'">
                                     </div>
 
                                     <div id="modalinpomation">
-                                        <h5>넥스트 짐</h5>
+                                        <h5>${placeName}</h5>
                                         <p>${workout}</p>
                                         <p>${location}</p>
                                         <p>
                                             <a href="${address}"
                                                target="_blank">자세한 링크</a>
                                         </p>
-                                        <p>작성자 : 헬린이</p>
+                                        <p>작성자 : ${userid}</p>
 
                                     </div>
 

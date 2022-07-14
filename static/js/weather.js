@@ -5,8 +5,9 @@ function set_temp() {
         url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
         data: {},
         success: function (response) {
-            $('#temp').text(response['temp'])
-
+            let temps = response['temp']
+            temps = Math.ceil(temps * 10) /10
+            $('.temp').text(temps)
         }
     })
 }
