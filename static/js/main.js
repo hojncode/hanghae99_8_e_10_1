@@ -107,7 +107,7 @@ function detailmodal(post_id) {
                                         <h5>${placeName}</h5>
                                         <p>${workout}</p>
                                         <p>${location}</p>
-                                        <p>
+                                        <p class="modallink">
                                             <a href="${address}"
                                                target="_blank">자세한 링크</a>
                                         </p>
@@ -120,7 +120,13 @@ function detailmodal(post_id) {
                                     <p id="review">리뷰 : ${comment}</p>
                                 </div>
                             </div>`
+
+
             $('#modal').append(temp_html)
+            // 링크가 없다면 아에 안보여줌
+            if (address == "") {
+                $(".modallink").empty()
+            }
         }
     })
 }
