@@ -12,13 +12,7 @@ window.addEventListener('load', () => {
                 event.stopPropagation();
             } else {
                 event.preventDefault();
-                update_order()
-                {
-                    // alert('회원가입 완료!')
-
-                }
             }
-
             form.classList.add('was-validated');
         }, false);
     });
@@ -54,26 +48,14 @@ function update_order() {
 }
 
 function delete_order() {
-
-    let name = $('#name')
-    let nickname = $('#nickname')
-    let idenfier = $('#idenfier')
-    let password = $('#password')
-    let email = $('#email')
-    let number = $('#number')
-    let address = $('#address')
+    // html단에서 진자로 받아온 유저 아이디값
+    let idenfier = userID
 
     $.ajax({
         type: 'POST',
         url: '/delete_user',
         data: {
-            name_give: name.val(),
-            nick_give: nickname.val(),
-            idenfier_give: idenfier.val(),
-            // password_give: password.val(),
-            email_give: email.val(),
-            number_give: number.val(),
-            address_give: address.val()
+            idenfier_give: idenfier,
         },
         success: function (response) {
             // alert(response['msg'])

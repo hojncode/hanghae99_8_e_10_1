@@ -255,20 +255,7 @@ def createUser():
         return jsonify({'result': 'false', 'msg': '중복된 아이디 입니다.'})
 
 
-#
-# # 회원정보수정 페이지 이동
-# @app.route('/modify')
-# def modify():
-#
-#     token_receive = request.cookies.get('mytoken')
-#     if token_receive is not None:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         user_info = db.users.find_one({"idenfier": payload["idenfier"]})
-#         return render_template('modify.html', userid=user_info["idenfier"])
-#     else:
-#         return render_template('main.html')
-
-  # 각 사용자 페이지 진입
+  # 회원정보 수정 페이지
 @app.route('/modify/<idenfier>')
 def user(idenfier):
 
@@ -284,8 +271,8 @@ def user(idenfier):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-#회원정보수정
 
+# 회원정보수정하기
 @app.route('/update_user', methods=['POST'])
 def updateUser():
     name_receive = request.form['name_give']
@@ -303,12 +290,12 @@ def updateUser():
 
     return jsonify({'result': 'success', 'msg': '회원수정 완료'})
 
-
+# 회원정보 삭제하기
 @app.route('/delete_user', methods=['POST'])
 def deleteUser():
-    name_receive = request.form['name_give']
+    idenfier_receive = request.form['idenfier_give']
 
-    db.users.delete_one({'name': name_receive})
+    db.users.delete_one({'idenfier': idenfier_receive})
 
     return jsonify({'result': 'success', 'msg': '회원탈퇴 완료'})
 
