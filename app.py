@@ -1,60 +1,10 @@
-<!doctype html>
-<html lang="kor">
+from flask import Flask, render_template, jsonify, request, Blueprint
+# 회원가입시 pw 암호화 해싱
+import hashlib
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+# jwt 토큰 생성
+import jwt
 
-<<<<<<< HEAD
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-
-    <!-- jQuery cookie 함수-->
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
-    <script>
-        function toggle_like(post_id, type) {
-        console.log(post_id, type)
-        let $a_like = $(`#${post_id} a[aria-label='heart']`)
-        let $i_like = $a_like.find("i")
-        if ($i_like.hasClass("fa-heart")) {
-            $.ajax({
-                type: "POST",
-                url: "/update_like",
-                data: {
-                    post_id_give: post_id,
-                    type_give: type,
-                    action_give: "unlike"
-                },
-                success: function (response) {
-                    console.log("unlike")
-                    $i_like.addClass("fa-heart-o").removeClass("fa-heart")
-                    $a_like.find("span.like-num").text(response["count"])
-                }
-            })
-        } else {
-            $.ajax({
-                type: "POST",
-                url: "/update_like",
-                data: {
-                    post_id_give: post_id,
-                    type_give: type,
-                    action_give: "like"
-                },
-                success: function (response) {
-                    console.log("like")
-                    $i_like.addClass("fa-heart").removeClass("fa-heart-o")
-                    $a_like.find("span.like-num").text(response["count"])
-                }
-            })
-
-        }
-=======
 # 시간 라이브러리
 import datetime
 # 토큰을 만들때 유효기간을 설정하기 위해서 서버시간을 가져와서 그로부터 얼마만큼 유효하게 설정하기 위해 필요
@@ -106,12 +56,10 @@ def show_modal():
     # ObjectId 로 데이터 찾을때 bson 패키지 설치 필요
     post = db.postbox.find_one({'_id': ObjectId(post_id_receive)})
     # print(post['file'])
-    if post['file'] is None:
-        print("no")
-    else:
-        print("yes")
 
     data = {
+        'userid': post['userid'],
+        'placeName': post['placeName'],
         'location': post['location'],
         'workout': post['workout'],
         'address': post['address'],
@@ -145,6 +93,8 @@ def write():
 @app.route('/post', methods=['POST'])
 def save_post():
     try:
+        userid_receive = request.form["userid_give"]
+        placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
         address_receive = request.form["address_give"]
@@ -164,6 +114,8 @@ def save_post():
         file.save(save_to)
 
         doc = {
+            "userid": userid_receive,
+            'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
             'address': address_receive,
@@ -174,13 +126,19 @@ def save_post():
 
         return jsonify({'msg': '저장완료'})
 
+    # except를 한 이유는 사진 파일이 없을경우 디비에 아에 빈 데이터로 저장이 되어서 
+    # ""로라도 저장하면 나중에 앞에서 데이터 처리하기 편해서 만든건데 이방법이 좋은건지는 모르겠네요
     except KeyError:
+        userid_receive = request.form["userid_give"]
+        placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
         address_receive = request.form["address_give"]
         comment_receive = request.form["comment_give"]
 
         doc = {
+            "userid": userid_receive,
+            'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
             'address': address_receive,
@@ -199,7 +157,7 @@ def loginPage():
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"idenfier": payload["idenfier"]})
-        return render_template('login.html', userid=user_info["idenfier"])
+        return render_template('main.html', userid=user_info["idenfier"])
     else:
         return render_template('login.html')
 
@@ -248,7 +206,13 @@ def login():
 # 회원가입 페이지 이동
 @app.route('/signup')
 def signup():
-    return render_template('signup.html')
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('main.html', userid=user_info["idenfier"])
+    else:
+        return render_template('signup.html')
 
 
 # 회원가입
@@ -274,149 +238,20 @@ def createUser():
         'number': number_receive,
         'address': address_receive,
 
->>>>>>> 004c48ccbc65817960c1d77181aa2f5afcacf6f7
     }
-    </script>
-    <!--구글폰트-->
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    db.users.insert_one(doc)
+
+    return jsonify({'result': 'success', 'msg': '회원가입 완료'})
 
 # 회원정보수정 페이지 이동
 @app.route('/modify')
 def modify():
     return render_template('modify.html')
 
-    <title>우리들의 운동장</title>
-
-    <!-- 배너 css -->
-    <link rel="stylesheet" href="../static/css/banner.css">
-    <!-- 로그인체크 및 로그아웃 js -->
-    <script src="../static/js/logincheck.js" defer></script>
-    <!-- css -->
-    <link href="../static/css/main.css" rel="stylesheet">
-    <!-- 포스팅 글 가져오기 -->
-    <script src="../static/js/main.js" defer></script>
-
-
-</head>
-
-<body>
-<div>
-    <div class="header_title">
-        <h1>
-            <a>우리동네 운동장</a>
-            <img id="bannerimg" src="../static/img/exercise.png">
-{#        </h1>#}
-{#                <div class="header_temp">#}
-{#                    <p>현재온도 : <span id="temp">--</span>도</p>#}
-{#                </div>#}
-
-        <div class="login">
-            <ul class="loginfalse">
-                <li>
-                    <a href="/login">로그인</a>
-                </li>
-                <li>
-                    <a href="/signup">회원가입</a>
-                </li>
-
-            </ul>
-            <ul class="loginture">
-                <li>
-                    <a href="/login">{{ userid }}</a>
-                </li>
-                <li>
-                    <a onclick="logout()">로그아웃</a>
-                </li>
-
-                 <li>
-                    <a href="/modify">회원정보수정</a>
-                </li>
-            </ul>
-
-        </div>
-
-    </div>
-</header>
-<div class="wrap">
-    <nav>
-        <div>
-            <button type="button" id="addPost"><a href="/write">운동추가하기</a></button>
-        </div>
-    </nav>
-    <section>
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col cards">
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-
-                    </div>
-                </div>
-
-
-
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../static/img/헬스장.jpg" class="card-img-top" id="card_img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">운동명</h5>
-                        <p class="card-text">카테고리</p>
-                        <p class="card-text">지역명</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
 
 
 
 
-    <footer>
 
-    </footer>
-
-
-    <!-- 팝업창 레이어-->
-
-    <div class="modal-detail" id="modal">
-        <div class="white-bg" id="modal_bg">
-            <div class="photo_detail">
-            </div>
-            <div class="comment_detail"></div>
-            <div class="location_detail"></div>
-            <div class="link_detail"></div>
-            <button type="button" class="btn btn-success" id="close">나가기</button>
-        </div>
-
-
-    </div>
-</div>
-
-    <div id="form-commentInfo">
-        <div id="comment-count">댓글 <span id="count">0</span></div>
-        <input id="comment-input" placeholder="댓글을 입력해 주세요.">
-        <button id="submit">등록</button>
-    </div>
-    <div id=comments>
-
-    </div>
-    <script src="index.js"></script>
-
-
-</div>
-
-
-</body>
-
-</html>
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5000, debug=True)

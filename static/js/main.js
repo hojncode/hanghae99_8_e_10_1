@@ -1,6 +1,7 @@
 /* 화면이 로딩이되면 실행하는 코드*/
 
 $(document).ready(function () {
+    set_temp()
     $(".cards").empty()
     show_cardList()
 });
@@ -21,6 +22,7 @@ function show_cardList() {
                 // let address = rows[i]['address']
                 // let comment = rows[i]['comment']
                 let file = "../static/postimg/" + rows[i]['file']
+                let placeName = rows[i]['placeName']
                 let location = rows[i]['location']
                 let workout = rows[i]['workout']
 
@@ -43,12 +45,12 @@ function show_cardList() {
                 }
 
                 let temp_html = `<div class="card" id="${post_id}" onclick="openmodal('${post_id}')">
-                                    <img src="${file}" class="card-img-top" onerror="this.src='../static/img/헬스장.jpg'">
+                                    <img src="${file}" class="card-img-top" onerror="this.src='../static/img/exercise.png'">
                                     <div class="card-body">
+                                        <h3>${placeName}</h3>
                                         <h5 class="card-title" id="card_img">${workout}</h5>
                                         <p class="card-text">${location}</p>
-                                        <div class="heart" onclick="hello()"></div>
-                                    </div>
+                                    </div>  
                                 </div>`
                 $('.cards').append(temp_html)
             }
@@ -74,6 +76,8 @@ function detailmodal(post_id) {
             let file = "../static/postimg/" + rows['file']
             let location = rows['location']
             let workout = rows['workout']
+            let placeName = rows['placeName']
+            let userid = rows['userid']
 
             if (file == "../static/postimg/") {
                     if (workout == "헬스") {
@@ -96,37 +100,18 @@ function detailmodal(post_id) {
             let temp_html = `<div id="modalCard">
                                 <div id="modalbox1">
                                     <div id="modalimgbox">
-                                        <img id="modalimg" src="${file}" onerror="this.src='../static/img/헬스장.jpg'">
+                                        <img id="modalimg" src="${file}" onerror="this.src='../static/img/exercise.png'">
                                     </div>
 
                                     <div id="modalinpomation">
-                                        <h5>넥스트 짐</h5>
+                                        <h5>${placeName}</h5>
                                         <p>${workout}</p>
                                         <p>${location}</p>
                                         <p>
                                             <a href="${address}"
                                                target="_blank">자세한 링크</a>
                                         </p>
-                                        <p>작성자 : 헬린이</p>
-               
-                                        <div id="disqus_thread"></div>
-                                        <script>
-                                            /**
-                                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-                                            /*
-                                            var disqus_config = function () {
-                                            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-                                            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                            };
-                                            */
-                                            (function() { // DON'T EDIT BELOW THIS LINE
-                                            var d = document, s = d.createElement('script');
-                                            s.src = 'https://coding-ws8fsinfun.disqus.com/embed.js';
-                                            s.setAttribute('data-timestamp', +new Date());
-                                            (d.head || d.body).appendChild(s);
-                                            })();
-                                        </script>
+                                        <p>작성자 : ${userid}</p>
 
                                     </div>
 
@@ -148,36 +133,8 @@ function openmodal(a) {
 }
 
 $('#modalBg').on('click', function () {
-<<<<<<< HEAD
     $('#modal').css('display', 'none');
 })
 $('#modalBtn').on('click', function () {
     $('#modal').css('display', 'none');
 })
-
-//댓글
-const likeBtns = document.querySelectorAll('.likeBtn');
-
-for (const likeBtn of likeBtns) {
-    likeBtn.addEventListener('click', (e) => {
-        const svgs = likeBtn.getElementsByTagName('svg');
-        console.log("clicked" + e);
-        const like = svgs[0];
-        const disLike = svgs[1];
-        if (disLike.getAttribute('display') === 'none') {
-            like.setAttribute('display', 'none');
-            disLike.setAttribute('display', 'inline-block');
-        } else {
-            like.setAttribute('display', 'inline-block');
-            disLike.setAttribute('display', 'none');
-        }
-    });
-}
-
-=======
-    $('#modal').css('display', 'none');
-})
-$('#modalBtn').on('click', function () {
-    $('#modal').css('display', 'none');
-})
->>>>>>> 004c48ccbc65817960c1d77181aa2f5afcacf6f7

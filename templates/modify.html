@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="../static/css/banner.css">
     <!-- 회원정보수정 및 회원탈퇴 js -->
     <script src="../static/js/modify.js" defer></script>
-
+       <!-- 로그인체크 및 로그아웃 js -->
+    <script src="../static/js/logincheck.js" defer></script>
     <!-- css -->
     <link href="../static/css/modify.css" rel="stylesheet">
 
@@ -52,7 +53,7 @@
             </ul>
             <ul class="loginture">
                 <li>
-                    <a href="/login">{{ userid }}</a>
+                    <a href="/modify">{{ userid }} 님 환영합니다</a>
                 </li>
                 <li>
                     <a onclick="logout()">로그아웃</a>
@@ -118,7 +119,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="address2">주소<span class="text-muted">&nbsp;(필수 아님)</span></label>
+                    <label for="address">주소<span class="text-muted">&nbsp;(필수 아님)</span></label>
                     <input type="text" class="form-control" id="address" placeholder="">
                 </div>
 

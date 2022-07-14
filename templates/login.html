@@ -15,7 +15,7 @@
 
     <!-- 배너 css -->
     <link rel="stylesheet" href="../static/css/banner.css">
-    <!-- 온도가져오기 -->
+    <!-- 현재 기온 js -->
     <script src="../static/js/weather.js" defer></script>
     <!-- 로그인체크 및 로그아웃 js -->
     <script src="../static/js/logincheck.js" defer></script>
@@ -34,26 +34,32 @@
             <a href="/">우리들의 운동장</a>
             <img id="bannerimg" src="../static/img/exercise.png">
         </h1>
-        {#        <div class="header_temp">#}
-        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
-        {#        </div>#}
 
         <div class="login">
             <ul class="loginfalse">
+                <li>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
+                </li>
                 <li>
                     <a href="/login">로그인</a>
                 </li>
                 <li>
                     <a href="/signup">회원가입</a>
                 </li>
+
             </ul>
             <ul class="loginture">
-                <li>
-                    <a href="/login">{{ userid }}</a>
+                 <li>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
                 </li>
+                <li>
+                    <a href="/modify">{{ userid }} 님 환영합니다</a>
+                </li>
+                
                 <li>
                     <a onclick="logout()">로그아웃</a>
                 </li>
+
             </ul>
 
         </div>
