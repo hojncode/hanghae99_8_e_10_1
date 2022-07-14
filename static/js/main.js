@@ -124,7 +124,7 @@ function detailmodal(post_id) {
                             </div>
                             <div class="modalBtn">
                                 <button type="button" id="modalclose" class="modalBtn2">닫기</button>
-                                <button type="button" id="modaldel" class="modalBtn2" onclick="delpost('${post_id}')">삭제</button>
+                                <button type="button" id="modaldel" class="modalBtn2" onclick="delpostcheck('${post_id}')">삭제</button>
                             </div>`
 
 
@@ -134,7 +134,7 @@ function detailmodal(post_id) {
                 $(".modallink").empty()
             }
             // 아이디와 글작성자가 같지 않으면 클래스를 투가해서 삭제버튼 안보이게
-            if (userID !== userid){
+            if (userID !== userid) {
                 $('#modaldel').addClass("hide")
             }
         }
@@ -160,9 +160,22 @@ $('#modalclose').on('click', function () {
     $(".modalBtn").remove()
 })
 
+
+// 게시물 삭제 확인 알림
+function delpostcheck(post_id){
+    let check_del = confirm("게시물을 삭제 하시겠습니까?");
+
+    if(check_del == true){
+        delpost(post_id)
+    }else{
+        return
+    }
+}
+
+
 // 게시물 삭제
 function delpost(post_id) {
-    console.log(post_id)
+    // console.log(post_id)
     $.ajax({
         type: "POST",
         url: "/delpost",

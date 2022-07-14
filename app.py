@@ -92,7 +92,7 @@ def del_post():
     return jsonify({
         'result': {
             'success': 'true',
-            'msg': '글삭제',
+            'msg': '게시물이 삭제 되었습니다.',
         }
     })
 
