@@ -1,4 +1,24 @@
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
+
+function get_user() {
+
+    $.ajax({
+        type: "GET",
+        url: '/user_INFO',
+        data: {},
+        success: function (response) {
+
+            console.log(response["user_INFO"])
+            let users = response["user_INFO"]
+            for (let i = 0; i < users.length; i++) {
+                let user = users[i]
+                console.log(user)
+            }
+        }
+    });
+}
+
+
     const forms = document.getElementsByClassName('validation-form');
 
     Array.prototype.filter.call(forms, (form) => {
@@ -48,6 +68,8 @@ function save_order() {
         }
     });
 }
+
+
 
 function user_delete(){
     let user_del = confirm("회원 탈퇴 하시겠습니까?");
