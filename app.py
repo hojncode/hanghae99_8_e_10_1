@@ -11,7 +11,7 @@ import datetime
 from datetime import datetime, timedelta
 
 ######## bson 패키지 설치 필요! ########
-#pymongo에서 _id의 ObjectId를 사용하기 위해 필요
+# pymongo에서 _id의 ObjectId를 사용하기 위해 필요
 from bson.objectid import ObjectId
 
 # 파이몽고 라이브러리
@@ -38,6 +38,7 @@ def home():
     else:
         return render_template('main.html')
 
+
 # 작성된 글 불러오기
 @app.route('/getpost', methods=['GET'])
 def show_postlist():
@@ -45,7 +46,8 @@ def show_postlist():
     for post in posts:
         post["_id"] = str(post["_id"])
     # print(posts)
-    return jsonify({'all_post': posts, "msg":"가져오기 성공"})
+    return jsonify({'all_post': posts, "msg": "가져오기 성공"})
+
 
 # 세부 내용 보기(모달)
 @app.route('/modal', methods=['POST'])
@@ -76,6 +78,23 @@ def show_modal():
             'data': data,
         }
     })
+
+  # 각 사용자 페이지 진입
+@app.route('/modify/<idenfier>')
+def user(idenfier):
+
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        status = (idenfier == payload["idenfier"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+
+        user_info = db.users.find_one({"idenfier": idenfier}, {"_id": False})
+        
+        return render_template('modify.html', userid=user_info,  status=status)
+
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
 
 
 # 글작성 페이지 이동
@@ -229,10 +248,34 @@ def createUser():
 
     return jsonify({'result': 'success', 'msg': '회원가입 완료'})
 
-# 회원정보수정 페이지 이동
-@app.route('/modify')
-def modify():
-    return render_template('modify.html')
+#회원정보수정
+
+@app.route('/update_user', methods=['POST'])
+def updateUser():
+    name_receive = request.form['name_give']
+    nick_receive = request.form['nick_give']
+    idenfier_receive = request.form['idenfier_give']
+    # password_receive = request.form['password_give']
+    email_receive = request.form['email_give']
+    number_receive = request.form['number_give']
+    address_receive = request.form['address_give']
+
+    # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
+    # password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+
+    db.users.update_one({'name': name_receive}, {'$set': {'name': name_receive, 'nick': nick_receive, 'idenfier': idenfier_receive, 'email': email_receive,'number': number_receive, 'address': address_receive}})
+
+    return jsonify({'result': 'success', 'msg': '회원수정 완료'})
+
+
+@app.route('/delete_user', methods=['POST'])
+def deleteUser():
+    name_receive = request.form['name_give']
+
+    db.users.delete_one({'name': name_receive})
+
+    return jsonify({'result': 'success', 'msg': '회원탈퇴 완료'})
+
 
 
 

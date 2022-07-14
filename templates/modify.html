@@ -53,7 +53,7 @@
             </ul>
             <ul class="loginture">
                 <li>
-                    <a href="/modify">{{ userid }} 님 환영합니다</a>
+                    <a href="/modify/{{ userid.idenfier }}">{{ userid.nick }} 님 환영합니다</a>
                 </li>
                 <li>
                     <a onclick="logout()">로그아웃</a>
@@ -72,14 +72,14 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="name">이름</label>
-                        <input type="text" class="form-control" id="name" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="name" placeholder="" value="{{ userid.name }}" required>
                         <div class="invalid-feedback">
                             이름을 입력해주세요.
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="nickname">별명</label>
-                        <input type="text" class="form-control" id="nickname" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="nickname" placeholder="" value="{{ userid.nick }}" required>
                         <div class="invalid-feedback">
                             별명을 입력해주세요.
                         </div>
@@ -88,7 +88,7 @@
 
                 <div class="mb-3">
                     <label for="idenfier">아이디</label>
-                    <input type="idenfier" class="form-control" id="idenfier" placeholder="" required>
+                    <input type="idenfier" class="form-control" id="idenfier" placeholder="" value="{{ userid.idenfier }}" disabled>
                     <div class="invalid-feedback">
                         아이디를 입력해주세요.
                     </div>
@@ -96,7 +96,7 @@
 
                 <div class="mb-3">
                     <label for="password">비밀번호</label>
-                    <input type="password" class="form-control" id="password" placeholder="" required>
+                    <input type="password" class="form-control" id="password" placeholder="" value="" required>
                     <div class="invalid-feedback">
                         비밀번호를 입력해주세요.
                     </div>
@@ -104,7 +104,7 @@
 
                 <div class="mb-3">
                     <label for="email">이메일</label>
-                    <input type="email" class="form-control" id="email" placeholder="" required>
+                    <input type="email" class="form-control" id="email" placeholder="" value="{{ userid.email }}" required>
                     <div class="invalid-feedback">
                         이메일을 입력해주세요.
                     </div>
@@ -112,15 +112,15 @@
 
                 <div class="mb-3">
                     <label for="address">전화번호</label>
-                    <input type="text" class="form-control" id="number" placeholder="" required>
+                    <input type="text" class="form-control" id="number" placeholder="" value="{{ userid.number }}" required>
                     <div class="invalid-feedback">
                         전화번호를 입력해주세요.
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="address">주소<span class="text-muted">&nbsp;(필수 아님)</span></label>
-                    <input type="text" class="form-control" id="address" placeholder="">
+                    <label for="address">주소</label>
+                    <input type="text" class="form-control" id="address" placeholder="" value="{{ userid.address }}">
                 </div>
 
 

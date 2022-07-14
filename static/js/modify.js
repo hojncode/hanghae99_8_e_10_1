@@ -1,24 +1,4 @@
-window.addEventListener('DOMContentLoaded', () => {
-
-function get_user() {
-
-    $.ajax({
-        type: "GET",
-        url: '/user_INFO',
-        data: {},
-        success: function (response) {
-
-            console.log(response["user_INFO"])
-            let users = response["user_INFO"]
-            for (let i = 0; i < users.length; i++) {
-                let user = users[i]
-                console.log(user)
-            }
-        }
-    });
-}
-
-
+window.addEventListener('load', () => {
     const forms = document.getElementsByClassName('validation-form');
 
     Array.prototype.filter.call(forms, (form) => {
@@ -27,8 +7,10 @@ function get_user() {
                 event.preventDefault();
                 event.stopPropagation();
             } else {
+                update_order()
                 event.preventDefault();
-                save_order()
+
+
                 {
                     // alert('회원가입 완료!')
 
@@ -40,7 +22,8 @@ function get_user() {
     });
 }, false);
 
-function save_order() {
+
+function update_order() {
 
     let name = $('#name')
     let nickname = $('#nickname')
@@ -52,7 +35,7 @@ function save_order() {
 
     $.ajax({
         type: 'POST',
-        url: '/users',
+        url: '/update_user',
         data: {
             name_give: name.val(),
             nick_give: nickname.val(),
@@ -63,20 +46,55 @@ function save_order() {
             address_give: address.val()
         },
         success: function (response) {
-            alert(response['msg'])
-            window.location.replace("/login")
+             alert(response['msg'])
+            window.location.replace("/")
         }
     });
 }
 
 
+ function delete_order() {
+
+    let name = $('#name')
+    let nickname = $('#nickname')
+    let idenfier = $('#idenfier')
+    let password = $('#password')
+    let email = $('#email')
+    let number = $('#number')
+    let address = $('#address')
+
+    $.ajax({
+        type: 'POST',
+        url: '/delete_user',
+        data: {
+            name_give: name.val(),
+            nick_give: nickname.val(),
+            idenfier_give: idenfier.val(),
+            // password_give: password.val(),
+            email_give: email.val(),
+            number_give: number.val(),
+            address_give: address.val()
+        },
+        success: function (response) {
+            // alert(response['msg'])
+            window.location.replace("/")
+        }
+    });
+}
+
+function logout() {
+    console.log($.removeCookie('mytoken', {path: '/'}))
+    $.removeCookie('mytoken', {path: '/'});
+    window.location.href = '/login'
+}
 
 function user_delete(){
     let user_del = confirm("회원 탈퇴 하시겠습니까?");
 
     if(user_del == true){
-        // 회원탈퇴기능구현
+       delete_order()
         alert("회원탈퇴가 정상처리 되었습니다")
+        logout()
     }else{
         alert("회원탈퇴가 취소되었습니다")
     }
