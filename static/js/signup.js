@@ -47,8 +47,14 @@ function save_order() {
             address_give: address.val()
         },
         success: function (response) {
-            alert(response['msg'])
-            window.location.replace("/login")
+            let result = response["result"] = "success"
+            if (result == "success"){
+                alert(response['msg'])
+                window.location.replace("/login")
+            } else if (result == "false"){
+                alert(response['msg'])
+                $('#idenfier').focus()
+            }
         }
     });
 }

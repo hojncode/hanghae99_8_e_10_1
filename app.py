@@ -226,22 +226,29 @@ def createUser():
     number_receive = request.form['number_give']
     address_receive = request.form['address_give']
 
-    # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
-    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    userid = db.users.find_one({'idenfier':idenfier_receive},{"_id" : False})
 
-    doc = {
-        'name': name_receive,
-        'nick': nick_receive,
-        'idenfier': idenfier_receive,
-        'password': password_hash,
-        'email': email_receive,
-        'number': number_receive,
-        'address': address_receive,
+    if userid == None :
+        # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
+        password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
 
-    }
-    db.users.insert_one(doc)
+        doc = {
+            'name': name_receive,
+            'nick': nick_receive,
+            'idenfier': idenfier_receive,
+            'password': password_hash,
+            'email': email_receive,
+            'number': number_receive,
+            'address': address_receive,
 
-    return jsonify({'result': 'success', 'msg': '회원가입 완료'})
+        }
+        db.users.insert_one(doc)
+
+        return jsonify({'result': 'success', 'msg': '회원가입 완료'})
+    else:
+        return jsonify({'result': 'false', 'msg': '중복된 아이디 입니다.'})
+
+
 
 # 회원정보수정 페이지 이동
 @app.route('/modify')
