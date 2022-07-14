@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, Blueprint
+from flask import Flask, render_template, jsonify, request, Blueprint, url_for
 # 회원가입시 pw 암호화 해싱
 import hashlib
 
@@ -255,18 +255,62 @@ def createUser():
         return jsonify({'result': 'false', 'msg': '중복된 아이디 입니다.'})
 
 
+#
+# # 회원정보수정 페이지 이동
+# @app.route('/modify')
+# def modify():
+#
+#     token_receive = request.cookies.get('mytoken')
+#     if token_receive is not None:
+#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#         user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+#         return render_template('modify.html', userid=user_info["idenfier"])
+#     else:
+#         return render_template('main.html')
 
-# 회원정보수정 페이지 이동
-@app.route('/modify')
-def modify():
+  # 각 사용자 페이지 진입
+@app.route('/modify/<idenfier>')
+def user(idenfier):
 
     token_receive = request.cookies.get('mytoken')
-    if token_receive is not None:
+    try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
-        return render_template('modify.html', userid=user_info["idenfier"])
-    else:
-        return render_template('main.html')
+        status = (idenfier == payload["idenfier"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+
+        user_info = db.users.find_one({"idenfier": idenfier}, {"_id": False})
+
+        return render_template('modify.html', userid=user_info,  status=status)
+
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+#회원정보수정
+
+@app.route('/update_user', methods=['POST'])
+def updateUser():
+    name_receive = request.form['name_give']
+    nick_receive = request.form['nick_give']
+    idenfier_receive = request.form['idenfier_give']
+    # password_receive = request.form['password_give']
+    email_receive = request.form['email_give']
+    number_receive = request.form['number_give']
+    address_receive = request.form['address_give']
+
+    # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
+    # password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+
+    db.users.update_one({'idenfier': idenfier_receive}, {'$set': {'name': name_receive, 'nick': nick_receive, 'idenfier': idenfier_receive, 'email': email_receive,'number': number_receive, 'address': address_receive}})
+
+    return jsonify({'result': 'success', 'msg': '회원수정 완료'})
+
+
+@app.route('/delete_user', methods=['POST'])
+def deleteUser():
+    name_receive = request.form['name_give']
+
+    db.users.delete_one({'name': name_receive})
+
+    return jsonify({'result': 'success', 'msg': '회원탈퇴 완료'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
