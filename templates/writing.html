@@ -32,49 +32,66 @@
     <link rel="stylesheet" href="../static/css/banner.css">
     <!-- 로그인체크 및 로그아웃 js -->
     <script src="../static/js/logincheck.js" defer></script>
-
+    <!-- 현재 기온 js -->
+    <script src="../static/js/weather.js" defer></script>
     <!-- css -->
     <link href="../static/css/writing.css" rel="stylesheet">
     <!-- 글 포스팅 -->
     <script src="../static/js/writing.js" defer></script>
+
+    <script>
+        // 유저 아이디를 받아서 디비 저장할건데 .js에서는 진자형식이 안대서 여기서 받아서
+        // 포스팅함수로 저장 하면 가능 유저아이디 받을수 있음
+        let userid = "{{userid}}"
+
+    </script>
 
 
 </head>
 
 <body>
 <header>
-    <div class="header_title">
+  <div class="header_title">
         <h1>
             <a href="/">우리들의 운동장</a>
             <img id="bannerimg" src="../static/img/exercise.png">
         </h1>
-        {#        <div class="header_temp">#}
-        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
-        {#        </div>#}
 
         <div class="login">
             <ul class="loginfalse">
+                <li>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
+                </li>
                 <li>
                     <a href="/login">로그인</a>
                 </li>
                 <li>
                     <a href="/signup">회원가입</a>
                 </li>
+
             </ul>
             <ul class="loginture">
+                 <li>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
+                </li>
                 <li>
                     <a href="/modify/{{ user_info.idenfier }}">{{ userid }} 님 환영합니다</a>
                 </li>
+                
                 <li>
                     <a onclick="logout()">로그아웃</a>
                 </li>
+
             </ul>
 
         </div>
 
     </div>
 </header>
+
 <div class="posting-box">
+
+   <input type="email" class="form-control" id="placeName" placeholder="내 장소 이름짓기">
 
     <label class="mr-sm-2">지역 선택</label>
     <select class="custom-select mr-sm-2" id="location">
@@ -109,24 +126,28 @@
         <option value="기타">기타</option>
     </select>
 
-
+    <p> 사진 저장</p>
     <div class="image-container">
-        <img id="preview-image"
-             src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
+
         <div class="custom-file">
 
             <div class="input-group mb-3">
                 <input type="file" class="form-control" id="input-image" accept="image/*">
 {#                <label class="input-group-text" for="input-image">Upload</label>#}
             </div>
-            {#            <input type="file" class="custom-file-input" id="input-image" accept="image/*">#}
-            {#            <label class="custom-file-label" for="input-image">사진 선택하기</label>#}
+            {#
         </div>
 
-        {#        <input style="display: block;" type="file" id="input-image" accept="image/*">#}
+        {#  <div>      <input style="display: block;" type="file" id="input-image" accept="image/*">#}</div>
+        <p></p>
+        <img id="preview-image"
+             src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"/>
+
     </div>
 
+    <p>
 
+    </p>
     <input type="email" class="form-control" id="address" placeholder="장소 추가 정보 링크">
 
     <textarea class="form-control" id="comment" rows="3" placeholder="간단한 리뷰 :)"></textarea>

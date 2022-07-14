@@ -1,4 +1,6 @@
-
+$(document).ready(function () {
+    set_temp()
+});
 
 let id = $("#idenfier")
 let pw = $("#password")

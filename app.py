@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, Blueprint
+from flask import Flask, render_template, jsonify, request, Blueprint, url_for
 # 회원가입시 pw 암호화 해싱
 import hashlib
 
@@ -58,12 +58,10 @@ def show_modal():
     # ObjectId 로 데이터 찾을때 bson 패키지 설치 필요
     post = db.postbox.find_one({'_id': ObjectId(post_id_receive)})
     # print(post['file'])
-    if post['file'] is None:
-        print("no")
-    else:
-        print("yes")
 
     data = {
+        'userid': post['userid'],
+        'placeName': post['placeName'],
         'location': post['location'],
         'workout': post['workout'],
         'address': post['address'],
@@ -114,6 +112,8 @@ def write():
 @app.route('/post', methods=['POST'])
 def save_post():
     try:
+        userid_receive = request.form["userid_give"]
+        placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
         address_receive = request.form["address_give"]
@@ -133,6 +133,8 @@ def save_post():
         file.save(save_to)
 
         doc = {
+            "userid": userid_receive,
+            'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
             'address': address_receive,
@@ -143,13 +145,19 @@ def save_post():
 
         return jsonify({'msg': '저장완료'})
 
+    # except를 한 이유는 사진 파일이 없을경우 디비에 아에 빈 데이터로 저장이 되어서 
+    # ""로라도 저장하면 나중에 앞에서 데이터 처리하기 편해서 만든건데 이방법이 좋은건지는 모르겠네요
     except KeyError:
+        userid_receive = request.form["userid_give"]
+        placeName_receive = request.form["placeName_give"]
         location_receive = request.form["location_give"]
         workout_receive = request.form["workout_give"]
         address_receive = request.form["address_give"]
         comment_receive = request.form["comment_give"]
 
         doc = {
+            "userid": userid_receive,
+            'placeName': placeName_receive,
             'location': location_receive,
             'workout': workout_receive,
             'address': address_receive,
@@ -168,7 +176,7 @@ def loginPage():
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"idenfier": payload["idenfier"]})
-        return render_template('login.html', userid=user_info["idenfier"])
+        return render_template('main.html', userid=user_info["idenfier"])
     else:
         return render_template('login.html')
 
@@ -217,11 +225,17 @@ def login():
 # 회원가입 페이지 이동
 @app.route('/signup')
 def signup():
-    return render_template('signup.html')
+    token_receive = request.cookies.get('mytoken')
+    if token_receive is not None:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"idenfier": payload["idenfier"]})
+        return render_template('main.html', userid=user_info["idenfier"])
+    else:
+        return render_template('signup.html')
 
 
 # 회원가입
-@app.route('/users', methods=['POST'])
+@app.route('/signup', methods=['POST'])
 def createUser():
     name_receive = request.form['name_give']
     nick_receive = request.form['nick_give']
@@ -231,22 +245,39 @@ def createUser():
     number_receive = request.form['number_give']
     address_receive = request.form['address_give']
 
+    userid = db.users.find_one({'idenfier':idenfier_receive},{'_id':False})
+
+    if userid == None :
+
+
     # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
-    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+        password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
 
-    doc = {
-        'name': name_receive,
-        'nick': nick_receive,
-        'idenfier': idenfier_receive,
-        'password': password_hash,
-        'email': email_receive,
-        'number': number_receive,
-        'address': address_receive,
+        doc = {
+            'name': name_receive,
+            'nick': nick_receive,
+            'idenfier': idenfier_receive,
+            'password': password_hash,
+            'email': email_receive,
+            'number': number_receive,
+            'address': address_receive,
 
-    }
-    db.users.insert_one(doc)
+        }
+        db.users.insert_one(doc)
 
-    return jsonify({'result': 'success', 'msg': '회원가입 완료'})
+        return jsonify({'result': 'success', 'msg': '회원가입 완료'})
+
+    else:
+        return jsonify({'result': 'false', 'msg': '중복된 아이디 입니다'})
+
+
+# # 중복검사
+# @app.route('/signup/check_dup', methods=['POST'])
+# def check_dup():
+#     idenfier_receive = request.form['idenfier_give']
+#     exists = bool(db.users.find_one({"idenfier": idenfier_receive}))
+#     return jsonify({'result': 'success', 'exists': exists})
+
 
 #회원정보수정
 

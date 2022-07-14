@@ -26,17 +26,19 @@
     <link rel="stylesheet" href="../static/css/banner.css">
     <!-- 로그인체크 및 로그아웃 js -->
     <script src="../static/js/logincheck.js" defer></script>
+    <!-- 현재 기온 js -->
+    <script src="../static/js/weather.js" defer></script>
     <!-- css -->
     <link href="../static/css/main.css" rel="stylesheet">
     <!-- 포스팅 글 가져오기 -->
     <script src="../static/js/main.js" defer></script>
     <script>
+        // 로그인안하면 글쓰기 페이지 안보내줌
         let nologin = "{{msg}}"
-        if (nologin !== ""){
+        if (nologin !== "") {
             alert("{{msg}}")
-            window.location.href="/"
+            window.location.href = "/"
         }
-
     </script>
 
 </head>
@@ -48,12 +50,12 @@
             <a href="/">우리들의 운동장</a>
             <img id="bannerimg" src="../static/img/exercise.png">
         </h1>
-        {#        <div class="header_temp">#}
-        {#            <p>현재온도 : <span id="temp">--</span>도</p>#}
-        {#        </div>#}
 
         <div class="login">
             <ul class="loginfalse">
+                <li>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
+                </li>
                 <li>
                     <a href="/login">로그인</a>
                 </li>
@@ -63,13 +65,16 @@
 
             </ul>
             <ul class="loginture">
+                 <li>
+                    <a>현재 온도 : <span class="temp"></span>℃</a>
+                </li>
                 <li>
                     <a href="/modify/{{ userid }}">{{ userid }} 님 환영합니다</a>
                 </li>
+                
                 <li>
                     <a onclick="logout()">로그아웃</a>
                 </li>
-
 
             </ul>
 
@@ -80,7 +85,7 @@
 <div class="wrap">
     <nav>
         <div>
-            <button type="button" id="addPost"><a href="/write">운동추가하기</a></button>
+            <button type="button" id="addPost"><a href="/write">운동 장소 공유</a></button>
         </div>
     </nav>
     <section>
@@ -110,7 +115,7 @@
                 </div>
 
                 <div id="modalinpomation">
-                    <h5>넥스트 짐</h5>
+                    <h5 id="modalplaceName">${placeName}</h5>
                     <p>헬스</p>
                     <p>서울</p>
                     <p>
@@ -129,6 +134,7 @@
         <button type="button" id="modalBtn">닫기</button>
     </div>
 </div>
+
 
 
 </body>
