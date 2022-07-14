@@ -47,13 +47,13 @@ function save_order() {
             address_give: address.val()
         },
         success: function (response) {
-            let result = response["result"] = "success"
+            let result = response["result"]
             if (result == "success"){
                 alert(response['msg'])
                 window.location.replace("/login")
             } else if (result == "false"){
                 alert(response['msg'])
-                $('#idenfier').focus()
+                idenfier.focus()
             }
         }
     });
