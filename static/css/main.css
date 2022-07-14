@@ -43,9 +43,9 @@ section {
 
 .cards {
     display: flex;
-    width: 100%;
+    width: 90%;
     height: auto;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-flow: wrap;
 
 }
