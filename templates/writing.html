@@ -88,6 +88,7 @@
 
     </div>
 </header>
+
 <div class="posting-box">
 
    <input type="email" class="form-control" id="placeName" placeholder="내 장소 이름짓기">
@@ -125,24 +126,28 @@
         <option value="기타">기타</option>
     </select>
 
-
+    <p> 사진 저장</p>
     <div class="image-container">
-        <img id="preview-image"
-             src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
+
         <div class="custom-file">
 
             <div class="input-group mb-3">
                 <input type="file" class="form-control" id="input-image" accept="image/*">
 {#                <label class="input-group-text" for="input-image">Upload</label>#}
             </div>
-            {#            <input type="file" class="custom-file-input" id="input-image" accept="image/*">#}
-            {#            <label class="custom-file-label" for="input-image">사진 선택하기</label>#}
+            {#
         </div>
 
-        {#        <input style="display: block;" type="file" id="input-image" accept="image/*">#}
+        {#  <div>      <input style="display: block;" type="file" id="input-image" accept="image/*">#}</div>
+        <p></p>
+        <img id="preview-image"
+             src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"/>
+
     </div>
 
+    <p>
 
+    </p>
     <input type="email" class="form-control" id="address" placeholder="장소 추가 정보 링크">
 
     <textarea class="form-control" id="comment" rows="3" placeholder="간단한 리뷰 :)"></textarea>
