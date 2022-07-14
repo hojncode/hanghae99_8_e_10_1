@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, Blueprint
+from flask import Flask, render_template, jsonify, request, Blueprint, url_for
 # 회원가입시 pw 암호화 해싱
 import hashlib
 
@@ -216,7 +216,7 @@ def signup():
 
 
 # 회원가입
-@app.route('/users', methods=['POST'])
+@app.route('/signup', methods=['POST'])
 def createUser():
     name_receive = request.form['name_give']
     nick_receive = request.form['nick_give']
@@ -226,22 +226,39 @@ def createUser():
     number_receive = request.form['number_give']
     address_receive = request.form['address_give']
 
+    userid = db.users.find_one({'idenfier':idenfier_receive},{'_id':False})
+
+    if userid == None :
+
+
     # 받은 비밀번호를 암호 알고리즘화 하여 해싱(관리자도 볼수 없게 암호화)
-    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+        password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
 
-    doc = {
-        'name': name_receive,
-        'nick': nick_receive,
-        'idenfier': idenfier_receive,
-        'password': password_hash,
-        'email': email_receive,
-        'number': number_receive,
-        'address': address_receive,
+        doc = {
+            'name': name_receive,
+            'nick': nick_receive,
+            'idenfier': idenfier_receive,
+            'password': password_hash,
+            'email': email_receive,
+            'number': number_receive,
+            'address': address_receive,
 
-    }
-    db.users.insert_one(doc)
+        }
+        db.users.insert_one(doc)
 
-    return jsonify({'result': 'success', 'msg': '회원가입 완료'})
+        return jsonify({'result': 'success', 'msg': '회원가입 완료'})
+
+    else:
+        return jsonify({'result': 'false', 'msg': '중복된 아이디 입니다'})
+
+
+# # 중복검사
+# @app.route('/signup/check_dup', methods=['POST'])
+# def check_dup():
+#     idenfier_receive = request.form['idenfier_give']
+#     exists = bool(db.users.find_one({"idenfier": idenfier_receive}))
+#     return jsonify({'result': 'success', 'exists': exists})
+
 
 # 회원정보수정 페이지 이동
 @app.route('/modify')
